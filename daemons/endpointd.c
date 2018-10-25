@@ -77,15 +77,18 @@ main(void)
 				done = 1;
 			}
 
-			if (!done) 
+			if (!done){
 				//if (send(s2, str, n, 0) < 0) {
-				if (send(s2, "OK", 2, 0) < 0) {
+				//if (send(s2, "OK, here is some json response", 2, 0) < 0) {
+				char* payload = "Ok, here is some json response";
+				if (send(s2, payload, strlen(payload), 0) < 0) {
 					perror("send");
 					done = 1;
 				}
+			}
 		} while (!done);
-		
+
 			close(s2);
-	}
-	return 0;
+		}
+		return(EXIT_SUCCESS);
 }

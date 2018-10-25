@@ -111,8 +111,8 @@ main(void)
 
 	if ((t=recv(s, str, 100, 0)) > 0) {
 		str[t] = '\0';
-		printf("echo> %s", str);
-		printf("echo> %s", "server sent an acknolwdment");
+		printf("server> %s", str);
+		printf("server> %s", "server daemon sent us somthing");
 	} else {
 		if (t < 0) perror("recv");
 		else printf("Server closed connection\n");
