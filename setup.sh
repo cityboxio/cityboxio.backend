@@ -3,13 +3,13 @@
 #
 # update httpd configuration
 #
-cp ./httpd.conf /etc/
+cp ./config/httpd.conf /etc/
 echo "httpd configuration updated"
 
 #
 # update rc.conf.local
 #
-cp ./rc.conf.local /etc/
+cp ./config/rc.conf.local /etc/
 echo "/etc/rc.conf.local updated"
 
 source="endpoints"
@@ -20,18 +20,24 @@ for endpoint in $endpoints;
 do
 	echo "##############################"
 	echo "compiling $endpoint"
-	cc -static -g -W -Wall -o $source/$endpoint $source/cgi.c
+	#cc -static -g -W -Wall -o $source/$endpoint $source/endpoint.c
+	#cc -static -g -W -Wall -o $source/$endpoint $source/clientd.sample.c
+	cc -static -g -W -Wall -o $source/$endpoint $source/endpoint.c
 
-	#doas install -o www -g www -m 0500 $source/test.sh /var/www/cgi-bin
-	#doas install -o www -g www -m 0500 $source/test /var/www/opendatahub
 	echo "installing $endpoint to /var/www/v1"
 	doas install -o www -g www -m 0500 $source/$endpoint /var/www/v1
+	#doas -u www install -o www -g www -m 0500 $source/$endpoint /var/www/v1
 	url="http://$server_ip/v1/$endpoint"
 	echo "accessable from $url"
 	echo "##############################"
+	echo "changing endpoint socket permissions"
+	#srwxrwxrwx   1 root  daemon    0 Oct 25 12:57 endpoint.sock
+	#srw-rw----   1 www   www       0 Oct 25 12:57 slowcgi.sock
+	chmod 777 /var/www/run/endpoint.sock #TODO fine tune it for more restrictive
+	echo "##############################"
 done
 
-doas install -o www -g www -m 0500 $source/endpoint_test /var/www/v1
+#doas install -o www -g www -m 0500 $source/endpoint_test /var/www/v1
 
 
 # Suppose you pull a disk from a decommissioned OpenBSD machine and you need to retrieve some files from it. 
@@ -64,8 +70,11 @@ doas rcctl start httpd
 doas rcctl check httpd 
 #doas rcctl restart httpd
 
-# To test if a program runs in the www chrooted enviroment
-# chroot -u www /var/www perl
+# chroot -u www /var/www perl # To test if a program runs in the www chrooted enviroment
+# doas -u www ls run/ # to test if it can run as www
+#
+# chroot -u www /var/www/ v1/opendatahub
+
 
 # ldd(1) to check a program we want to run in chroot 
 
