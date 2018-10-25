@@ -11,13 +11,14 @@
 #include <unistd.h>
 #include <syslog.h>
 
+
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 
 #define SOCK_PATH "/var/www/run/endpoint.sock"
 
-//TODO make socket permisions here. and not in the setup script
 int 
 main(void)
 {
@@ -34,14 +35,24 @@ main(void)
 
 	local.sun_family = AF_UNIX;
 	//strcpy(local.sun_path, SOCK_PATH);
+
 	strlcpy(local.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
 
 	unlink(local.sun_path);
-	//len = strlen(local.sun_path) + sizeof(local.sun_family);
+
 	len = strlen(local.sun_path) + sizeof(local.sun_family+1);
 	if (bind(s, (struct sockaddr *)&local, len) == -1) {
 		perror("bind");
 		exit(1);
+	}
+	
+	//TODO make SOCK_PATH socket permisions and ownership here. 
+	// and not in the setup script
+	//
+	if (chmod(SOCK_PATH, 0777) != 0)
+		perror("chmod() error");
+	else {
+		printf("permission changed\n");	
 	}
 
 	if (listen(s, 5) == -1) {
