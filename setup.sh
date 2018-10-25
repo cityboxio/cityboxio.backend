@@ -30,11 +30,11 @@ do
 	url="http://$server_ip/v1/$endpoint"
 	echo "accessable from $url"
 	echo "##############################"
-	echo "changing endpoint socket permissions"
+	#echo "changing endpoint socket permissions"
 	#srwxrwxrwx   1 root  daemon    0 Oct 25 12:57 endpoint.sock
 	#srw-rw----   1 www   www       0 Oct 25 12:57 slowcgi.sock
-	chmod 777 /var/www/run/endpoint.sock #TODO fine tune it for more restrictive
-	echo "##############################"
+	#chmod 777 /var/www/run/endpoint.sock #TODO fine tune it for more restrictive
+	#echo "##############################"
 done
 
 #doas install -o www -g www -m 0500 $source/endpoint_test /var/www/v1
