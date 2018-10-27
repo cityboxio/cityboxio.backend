@@ -13,27 +13,28 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
+#include "cbendpoint.h" //TODO use Makefile
+
 #define SOCK_PATH "/run/endpoint.sock"
 
 int
 main(void)
 {
+	//TODO update pledge
 	//if (-1 == pledge("stdio", NULL)) 
 	//	err(EXIT_FAILURE, "pledge");
-	puts("Status: 200 OK\r");
-	puts("Content-Type: text/json\r");
-	/*  
-	 *  application/atom+xml                  atom;
-	 *  application/json                      json map topojson;
-	 *  application/ld+json                   jsonld;
-	 *  application/rss+xml                   rss;
-	 *  application/vnd.geo+json              geojson;
-	 *  application/xml                       rdf xml;
-	 *  application/javascript                js;	
-	 */
 
-	puts("\r");
+	//TODO isolate a function(header) or struct to update http header 
+	//puts("Status: 200 OK\r");
+	//puts("Content-Type: application/json\r");
+	
+	puts(HEADER_STATUS);
+	puts(HEADER_CONTENT_TYPE);
+	
+	//puts("\r");
 
+	//TODO Isolate a function to spellout all HTTP Env
+	//TODO  struct httpenv
 	printf("\n");
 	printf("GATEWAY_INTERFACE: %s\n", getenv("GATEWAY_INTERFACE"));
 	printf("SERVER_NAME: %s\n", getenv("SERVER_NAME"));
@@ -85,8 +86,9 @@ main(void)
 		perror("socket");
 		exit(1);
 	}
-
-	printf("\n\nendpoint client trying to connect...\n\n");
+	
+	//TODO full detailed syslog instead of printf
+	printf("\n\n %s endpoint client trying to connect...\n\n", getenv("SCRIPT_NAME"));
 
 	remote.sun_family = AF_UNIX;
 	//strcpy(remote.sun_path, SOCK_PATH);
@@ -102,9 +104,8 @@ main(void)
 
 	//while(printf("> "), fgets(str, 100, stdin), !feof(stdin)) {
 	//if (send(s, str, strlen(str), 0) == -1) {
-	char* payload = "AAAAAAAAAA"; 
+	char* payload = "request from the chrooted cgi endpoint to the daemon"; 
 	if (send(s, payload, strlen(payload), 0) == -1) {
-		//if (send(s, "hahaha", strlen("hahaha"), 0) == -1) {
 		perror("send");
 		exit(1);
 	}
