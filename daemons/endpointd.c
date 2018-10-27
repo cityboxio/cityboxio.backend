@@ -89,9 +89,27 @@ main(void)
 			}
 
 			if (!done){
+				/* start of reading data from a file */
+				//TODO fix truncation after endoflines
+				FILE *fp;
+				int ch;
+				char txt[9000]; //TODO decide on the max size of a response.
+				int len=0;
+				fp=fopen("./../DATA/README.md", "r");
+
+				do{
+					ch=fgetc(fp);
+					txt[len]=ch;
+					len++;
+				} while(ch!=EOF);
+				//} while(ch!=EOF && ch!='\n');
+				fclose(fp);
+				//puts(txt);
+				/* end of reading data from a file */
+			
+				//char* payload = "Ok, here is some json response";
+				char* payload = txt;
 				//if (send(s2, str, n, 0) < 0) {
-				//if (send(s2, "OK, here is some json response", 2, 0) < 0) {
-				char* payload = "Ok, here is some json response";
 				if (send(s2, payload, strlen(payload), 0) < 0) {
 					perror("send");
 					done = 1;

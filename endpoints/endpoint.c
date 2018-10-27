@@ -15,7 +15,10 @@
 
 #include "cbendpoint.h" //TODO use Makefile
 
-#define SOCK_PATH "/run/endpoint.sock"
+//#define SOCK_PATH "/run/endpoint.sock"
+
+char SOCK_PATH[100];
+
 int
 main(void)
 {
@@ -26,16 +29,40 @@ main(void)
 	puts(HEADER_STATUS);
 	puts(HEADER_CONTENT_TYPE);
 
+	//TODO refactor into it a function for resue
+	//char SOCK_PATH[100] = "";
+	//strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
+	//strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
+	//strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
+	//printf("the socket path:  %s\n\n\n", SOCK_PATH);
+
+
 	//TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
 	//TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
 
 	char* current_request = getenv("REQUEST_METHOD");	
 	printf("%i", strncmp(current_request, "GET", 3));
-	if (strncmp(current_request, "GET", 3) == 0){
+	if (strncmp(current_request, "GET", sizeof("GET")) == 0){
 		printf("syslog its a GET request");
-	} else if (strncmp(current_request, "POST", 4) == 0){
+
+		//TODO refactor into it a function for resue
+		char SOCK_PATH[100] = "";
+		strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
+		printf("the socket path:  %s\n\n\n", SOCK_PATH);
+
+	} else if (strncmp(current_request, "POST", sizeof("POST")) == 0){
 		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
 		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
+
+		//TODO refactor into it a function for resue
+		char SOCK_PATH[100] = "";
+		strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
+		printf("the socket path:  %s\n\n\n", SOCK_PATH);
+
 		printf("syslog its a POST request");
 	} else{
 		printf("A json body sayin only GET and POST requests are supported");
@@ -69,7 +96,8 @@ main(void)
 
 	remote.sun_family = AF_UNIX;
 	//strcpy(remote.sun_path, SOCK_PATH);
-	strlcpy(remote.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
+	//strlcpy(remote.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
+	strlcpy(remote.sun_path, SOCK_PATH, sizeof(remote.sun_family));
 	//len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	len = strlen(remote.sun_path) + sizeof(remote.sun_family+1);
 	if (connect(s, (struct sockaddr *)&remote, len) == -1) {

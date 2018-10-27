@@ -15,7 +15,7 @@ echo "/etc/rc.conf.local updated"
 source="endpoints"
 
 server_ip="192.168.1.202"
-endpoints="opendatahub rd" # array of all the endpoints 
+endpoints="opendatahub rd apidoc" # array of all the endpoints 
 for endpoint in $endpoints;
 do
 	echo "##############################"
