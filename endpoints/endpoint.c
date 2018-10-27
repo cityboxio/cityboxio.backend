@@ -16,7 +16,6 @@
 #include "cbendpoint.h" //TODO use Makefile
 
 #define SOCK_PATH "/run/endpoint.sock"
-
 int
 main(void)
 {
@@ -24,48 +23,26 @@ main(void)
 	//if (-1 == pledge("stdio", NULL)) 
 	//	err(EXIT_FAILURE, "pledge");
 
-	//TODO isolate a function(header) or struct to update http header 
-	//puts("Status: 200 OK\r");
-	//puts("Content-Type: application/json\r");
-	
 	puts(HEADER_STATUS);
 	puts(HEADER_CONTENT_TYPE);
-	
-	//puts("\r");
 
-	//TODO Isolate a function to spellout all HTTP Env
-	//TODO  struct httpenv
-	printf("\n");
-	printf("GATEWAY_INTERFACE: %s\n", getenv("GATEWAY_INTERFACE"));
-	printf("SERVER_NAME: %s\n", getenv("SERVER_NAME"));
-	printf("SERVER_SOFTWARE: %s\n", getenv("SERVER_SOFTWARE"));
-	printf("SERVER_PROTOCOL: %s\n", getenv("SERVER_PROTOCOL"));
-	printf("SERVER_PORT: %s\n", getenv("SERVER_PORT"));
-	printf("REQUEST_METHOD: %s\n", getenv("REQUEST_METHOD"));
-	printf("PATH_INFO: %s\n", getenv("PATH_INFO"));
-	printf("PATH_TRANSLATED: %s\n", getenv("PATH_TRANSLATED"));
-	printf("SCRIPT_NAME: %s\n", getenv("SCRIPT_NAME"));
-	printf("DOCUMENT_ROOT: %s\n", getenv("DOCUMENT_ROOT"));
-	printf("QUERY_STRING: %s\n", getenv("QUERY_STRING"));
-	printf("REMOTE_HOST: %s\n", getenv("REMOTE_HOST"));
-	printf("REMOTE_ADDR: %s\n", getenv("REMOTE_ADDR"));
-	printf("AUTH_TYPE: %s\n", getenv("AUTH_TYPE"));
-	printf("REMOTE_USER: %s\n", getenv("REMOTE_USER"));
-	printf("REMOTE_IDENT: %s\n", getenv("REMOTE_IDENT"));
-	printf("CONTENT_TYPE: %s\n", getenv("CONTENT_TYPE"));
-	printf("CONTENT_LENGTH: %s\n", getenv("CONTENT_LENGTH"));
-	printf("HTTP_FROM: %s\n", getenv("HTTP_FROM"));
-	printf("HTTP_ACCEPT: %s\n", getenv("HTTP_ACCEPT"));
-	printf("HTTP_USER_AGENT: %s\n", getenv("HTTP_USER_AGENT"));
-	printf("HTTP_REFERER: %s\n", getenv("HTTP_REFERER"));
-	
-	printf("\n");
-	printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
-	printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
+	//TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
+	//TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
 
-	printf("%s", basename(getenv("SCRIPT_NAME")));
+	char* current_request = getenv("REQUEST_METHOD");	
+	printf("%i", strncmp(current_request, "GET", 3));
+	if (strncmp(current_request, "GET", 3) == 0){
+		printf("syslog its a GET request");
+	} else if (strncmp(current_request, "POST", 4) == 0){
+		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
+		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
+		printf("syslog its a POST request");
+	} else{
+		printf("A json body sayin only GET and POST requests are supported");
+		printf("syslog an unsupported request happened");
+	}
 
-
+	printf("\n\n\nREQUEST_METHOD: %s\n", current_request);
 
 	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
 	syslog(LOG_WARNING, "Attempting: %s", "xyz");
@@ -124,4 +101,40 @@ main(void)
 	close(s);
 
 	return(EXIT_SUCCESS);
+}
+
+
+
+void	
+show_env(void)
+{
+	printf("\n");
+	printf("GATEWAY_INTERFACE: %s\n", getenv("GATEWAY_INTERFACE"));
+	printf("SERVER_NAME: %s\n", getenv("SERVER_NAME"));
+	printf("SERVER_SOFTWARE: %s\n", getenv("SERVER_SOFTWARE"));
+	printf("SERVER_PROTOCOL: %s\n", getenv("SERVER_PROTOCOL"));
+	printf("SERVER_PORT: %s\n", getenv("SERVER_PORT"));
+	printf("REQUEST_METHOD: %s\n", getenv("REQUEST_METHOD"));
+	printf("PATH_INFO: %s\n", getenv("PATH_INFO"));
+	printf("PATH_TRANSLATED: %s\n", getenv("PATH_TRANSLATED"));
+	printf("SCRIPT_NAME: %s\n", getenv("SCRIPT_NAME"));
+	printf("DOCUMENT_ROOT: %s\n", getenv("DOCUMENT_ROOT"));
+	printf("QUERY_STRING: %s\n", getenv("QUERY_STRING"));
+	printf("REMOTE_HOST: %s\n", getenv("REMOTE_HOST"));
+	printf("REMOTE_ADDR: %s\n", getenv("REMOTE_ADDR"));
+	printf("AUTH_TYPE: %s\n", getenv("AUTH_TYPE"));
+	printf("REMOTE_USER: %s\n", getenv("REMOTE_USER"));
+	printf("REMOTE_IDENT: %s\n", getenv("REMOTE_IDENT"));
+	printf("CONTENT_TYPE: %s\n", getenv("CONTENT_TYPE"));
+	printf("CONTENT_LENGTH: %s\n", getenv("CONTENT_LENGTH"));
+	printf("HTTP_FROM: %s\n", getenv("HTTP_FROM"));
+	printf("HTTP_ACCEPT: %s\n", getenv("HTTP_ACCEPT"));
+	printf("HTTP_USER_AGENT: %s\n", getenv("HTTP_USER_AGENT"));
+	printf("HTTP_REFERER: %s\n", getenv("HTTP_REFERER"));
+
+	printf("\n");
+	printf("%s", basename(getenv("SCRIPT_NAME")));
+
+	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
+	syslog(LOG_DEBUG, "http enviroment shown");
 }
