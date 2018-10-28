@@ -2,6 +2,7 @@
 
 hier - layout of the project structure (via `r !tree` from Makefile)
 
+
 .
 |-- BUGS.md
 |-- DATA
@@ -18,6 +19,11 @@ hier - layout of the project structure (via `r !tree` from Makefile)
 |-- Makefile
 |-- README
 |-- TODO.md
+|-- bin
+|   |-- apidoc
+|   |-- opendatahub
+|   |-- ping
+|   `-- rd
 |-- cli
 |   `-- cbcli.3
 |-- config
@@ -37,13 +43,10 @@ hier - layout of the project structure (via `r !tree` from Makefile)
 |-- doc
 |   `-- unixdomain.jpeg
 |-- endpoints
-|   |-- apidoc
 |   |-- cbendpoint.3
 |   |-- cbendpoint.h
-|   |-- endpoint.c
-|   |-- opendatahub
-|   `-- rd
+|   `-- endpoint.c
 |-- setup.sh
 `-- test.sh
 
-8 directories, 34 files
+9 directories, 35 files
