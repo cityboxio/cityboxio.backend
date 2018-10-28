@@ -16,10 +16,49 @@
 #include "cbendpoint.h" //TODO use Makefile
 
 //#define SOCK_PATH "/run/endpoint.sock"
+//TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
+//TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
 
+
+// daemon client variables
+int s, t, len;
+struct sockaddr_un remote;
 char SOCK_PATH[100];
+char str[80];
 
-int
+	int
+setup_sockpath(void)
+{
+	char* current_request = getenv("REQUEST_METHOD");
+	printf("%i", strncmp(current_request, "GET", 3));
+	
+	strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
+	strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
+
+	if (strncmp(current_request, "GET", sizeof("GET")) == 0) {
+		printf("\nsyslog its a GET request\n");
+		
+		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
+		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
+	} else if (strncmp(current_request, "POST", sizeof("POST")) == 0) {
+		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
+		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
+		printf("syslog its a POST request");
+
+		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
+		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
+	} else {
+		printf("A json body sayin only GET and POST requests are supported");
+		printf("syslog an unsupported request happened");
+	}
+
+	printf("\n\n\nREQUEST_METHOD: %s\n", current_request);
+
+	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
+	return 1;
+}
+
+	int
 main(void)
 {
 	//TODO update pledge
@@ -29,78 +68,35 @@ main(void)
 	puts(HEADER_STATUS);
 	puts(HEADER_CONTENT_TYPE);
 
-	//TODO refactor into it a function for resue
-	//char SOCK_PATH[100] = "";
-	//strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
-	//strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
-	//strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
-	//printf("the socket path:  %s\n\n\n", SOCK_PATH);
-
-
-	//TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
-	//TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
-
-	char* current_request = getenv("REQUEST_METHOD");	
-	printf("%i", strncmp(current_request, "GET", 3));
-	if (strncmp(current_request, "GET", sizeof("GET")) == 0){
-		printf("syslog its a GET request");
-
-		//TODO refactor into it a function for resue
-		char SOCK_PATH[100] = "";
-		strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
-		strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
-		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
-		printf("the socket path:  %s\n\n\n", SOCK_PATH);
-
-	} else if (strncmp(current_request, "POST", sizeof("POST")) == 0){
-		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
-		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
-
-		//TODO refactor into it a function for resue
-		char SOCK_PATH[100] = "";
-		strlcat(SOCK_PATH, "/run/", sizeof(SOCK_PATH));
-		strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
-		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
-		printf("the socket path:  %s\n\n\n", SOCK_PATH);
-
-		printf("syslog its a POST request");
-	} else{
-		printf("A json body sayin only GET and POST requests are supported");
-		printf("syslog an unsupported request happened");
-	}
-
-	printf("\n\n\nREQUEST_METHOD: %s\n", current_request);
-
-	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
-	syslog(LOG_WARNING, "Attempting: %s", "xyz");
-	//syslog(LOG_AUTHPRIV | LOG_ERR);
-	//syslog(LOG_INFO, "%s logging to a bind mounted dir for CQRS", "tsutsu");
-	//syslog(LOG_ERR, "Success/failure?: %m");
-	closelog();
-
 	////
 	/* daemon stuff */
 	////
-	int s, t, len;
-	struct sockaddr_un remote;
-	char str[100];
 
+	setup_sockpath();
+	printf("\nafter setup %s\n", SOCK_PATH);
+	
+	//TODO int daemon_client_setup()
 	//if ((s = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) {
 	if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
 		perror("socket");
 		exit(1);
 	}
-	
+
+	//TODO daemon_client_connect()
 	//TODO full detailed syslog instead of printf
 	printf("\n\n %s endpoint client trying to connect...\n\n", getenv("SCRIPT_NAME"));
 
 	remote.sun_family = AF_UNIX;
 	//strcpy(remote.sun_path, SOCK_PATH);
-	//strlcpy(remote.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
-	strlcpy(remote.sun_path, SOCK_PATH, sizeof(remote.sun_family));
+	printf("\nbefore strlcpy %s\n", SOCK_PATH);
+	strlcpy(remote.sun_path, SOCK_PATH, sizeof(remote.sun_path));
+	printf("\nbefore len %s\n", SOCK_PATH);
+	//len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	//len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	len = strlen(remote.sun_path) + sizeof(remote.sun_family+1);
 	if (connect(s, (struct sockaddr *)&remote, len) == -1) {
+		//syslog(LOG_ERR, "daemon socket %s not found", SOCK_PATH);
+		printf("daemon socket %s not found", SOCK_PATH);
 		perror("connect");
 		exit(1);
 	}
@@ -125,15 +121,15 @@ main(void)
 		exit(1);
 	}
 	//}
-
 	close(s);
 
+	closelog();
 	return(EXIT_SUCCESS);
 }
 
 
 
-void	
+	void
 show_env(void)
 {
 	printf("\n");

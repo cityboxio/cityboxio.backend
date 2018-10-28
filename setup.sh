@@ -13,19 +13,18 @@ cp ./config/rc.conf.local /etc/
 echo "/etc/rc.conf.local updated"
 
 source="endpoints"
+bin="bin"
 
 server_ip="192.168.1.202"
-endpoints="opendatahub rd apidoc" # array of all the endpoints 
+endpoints="opendatahub rd apidoc ping" # array of all the endpoints 
 for endpoint in $endpoints;
 do
 	echo "##############################"
 	echo "compiling $endpoint"
-	#cc -static -g -W -Wall -o $source/$endpoint $source/endpoint.c
-	#cc -static -g -W -Wall -o $source/$endpoint $source/clientd.sample.c
-	cc -static -g -W -Wall -o $source/$endpoint $source/endpoint.c
+	cc -static -g -W -Wall -o $bin/$endpoint $source/endpoint.c
 
 	echo "installing $endpoint to /var/www/v1"
-	doas install -o www -g www -m 0500 $source/$endpoint /var/www/v1
+	doas install -o www -g www -m 0500 $bin/$endpoint /var/www/v1
 	#doas -u www install -o www -g www -m 0500 $source/$endpoint /var/www/v1
 	url="http://$server_ip/v1/$endpoint"
 	echo "accessable from $url"

@@ -17,7 +17,8 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#define SOCK_PATH "/var/www/run/endpoint.sock"
+//#define SOCK_PATH "/var/www/run/endpoint.sock"
+#define SOCK_PATH "/var/www/run/opendatahub.commands.sock"
 
 int 
 main(void)
@@ -45,7 +46,8 @@ main(void)
 		perror("bind");
 		exit(1);
 	}
-	
+
+	//TODO refactor into a sock_config() or somthing	
 	//TODO make SOCK_PATH socket permisions and ownership here. 
 	// and not in the setup script
 	//
