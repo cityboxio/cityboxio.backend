@@ -19,6 +19,12 @@
 
 //#define SOCK_PATH "/var/www/run/endpoint.sock"
 #define SOCK_PATH "/var/www/run/opendatahub.commands.sock"
+//TODO	endpointd.h #define or struct of all endpoints?
+//	and endpoint.c write case statments for each endpoint?
+//	case SOCK_PATH equal "opendatahub"
+//	case SOCK_PATH equal "rd"
+//TODO	if a microservice deployed on a sperate machine;
+//	control which cases gets implmented via Makefile/endpoint.h flags
 
 int s, s2, len;
 unsigned t;
@@ -27,6 +33,14 @@ struct sockaddr_un local, remote;
 int 
 main(void)
 {
+	//TODO	add pledge
+	
+	openlog("opendatahub.commands.daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	//TODO	update syslog.conf to log to two seperate files based on 
+	//	commands.sock, queries.sock per endpoint	
+	//TODO 	customize openlog params
+	//TODO 	close log
+
 	/* Create a new UNIX Socket */
 	if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
 	//if ((s = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) {
@@ -96,6 +110,10 @@ main(void)
 				if (n < 0) perror("recv");
 				printf("CQRS command: %s\n", buffer);
 				syslog(LOG_INFO, "CQRS command: %s", buffer);
+				syslog(LOG_DEBUG, "CQRS command: %s", buffer);
+				//TODO logging should be done to the daemon logs
+				//syslog(LOG_DAEMON, "CQRS command: %s", buffer);
+				syslog(LOG_USER, "CQRS command: %s", buffer);
 				// zero back the str(received message) to hold next request
 				memset(buffer,'\0',sizeof(buffer)); 
 				done = 1;
