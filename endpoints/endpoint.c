@@ -105,7 +105,9 @@ main(void)
 
 	//while(printf("> "), fgets(str, 100, stdin), !feof(stdin)) {
 	//if (send(s, str, strlen(str), 0) == -1) {
-	char* payload = "request from the chrooted cgi endpoint to the daemon"; 
+	char* payload = getenv("QUERY_STRING");
+	printf("QUERY_STRING: %s\n", getenv("QUERY_STRING"));
+	printf("PAYLOAD: %s\n", payload);
 	if (send(s, payload, strlen(payload), 0) == -1) {
 		perror("send");
 		exit(1);
@@ -113,8 +115,8 @@ main(void)
 
 	if ((t=recv(s, str, 100, 0)) > 0) {
 		str[t] = '\0';
-		printf("server> %s", str);
-		printf("server> %s", "server daemon sent us somthing");
+		printf("server-to-client> %s", str);
+		printf("server-to-client> %s", "server daemon sent us somthing");
 	} else {
 		if (t < 0) perror("recv");
 		else printf("Server closed connection\n");

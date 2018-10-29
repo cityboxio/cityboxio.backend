@@ -20,14 +20,14 @@
 //#define SOCK_PATH "/var/www/run/endpoint.sock"
 #define SOCK_PATH "/var/www/run/opendatahub.commands.sock"
 
+int s, s2, len;
+unsigned t;
+struct sockaddr_un local, remote;
+
 int 
 main(void)
 {
-	int s, s2, len;
-	unsigned t;
-	struct sockaddr_un local, remote;
-	char str[100];
-
+	/* Create a new UNIX Socket */
 	if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
 	//if ((s = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) {
 		perror("socket");
@@ -52,9 +52,11 @@ main(void)
 	// and not in the setup script
 	//
 	if (chmod(SOCK_PATH, 0777) != 0)
+		//TODO syslog
 		perror("chmod() error");
 	else {
-		printf("permission changed\n");	
+		//TODO syslog
+		printf("permission changed\n");
 	}
 
 	if (listen(s, 5) == -1) {
@@ -62,9 +64,10 @@ main(void)
 		exit(1);
 	}
 
+
 	for(;;) {
 		int done, n;
-		
+		//TODO adjust proper LOG_DEBUG for debugging things
 		syslog(LOG_INFO, "%s", "Waiting for connection...");
 		printf("Waiting for a connection...\n");
 		
@@ -75,22 +78,30 @@ main(void)
 		}
 
 		//TODO Should be forking a process dedicated to handle this client only
+		//TODO non-blocking mode (MSG_DONTWAIT flag)
 		printf("Connected.\n");
 
+		int buffer_size = 2000000;
+		char buffer[buffer_size];
 		done = 0;
 		do {
-			n = recv(s2, str, 100, 0);
-			syslog(LOG_DEBUG, "s2: %i\n", s2);	
-			syslog(LOG_DEBUG, "str: %s\n", str);	
-			syslog(LOG_DEBUG, "n: %i\n", n);	
+			//printf("buffer: %s\n", buffer);
+			n = recv(s2, buffer, buffer_size, 0);
+			syslog(LOG_DEBUG, "s2: %i\n", s2);
+			syslog(LOG_DEBUG, "buffer: %s\n", buffer);
+			syslog(LOG_DEBUG, "n: %i\n", n);
 
 			if (n <= 0) {
 				if (n < 0) perror("recv");
-				syslog(LOG_INFO, "CQRS command: %s", str);
+				printf("CQRS command: %s\n", buffer);
+				syslog(LOG_INFO, "CQRS command: %s", buffer);
+				// zero back the str(received message) to hold next request
+				memset(buffer,'\0',sizeof(buffer)); 
 				done = 1;
 			}
 
 			if (!done){
+				
 				/* start of reading data from a file */
 				//TODO fix truncation after endoflines
 				FILE *fp;
@@ -109,9 +120,13 @@ main(void)
 				//puts(txt);
 				/* end of reading data from a file */
 			
+				//TODO if the request was a command then this daemon is a command daemon
+				//-> return to client an acknolgment that the their message was resviced(json format)
+				//TODO if the request was a query then this daemon is a query daemon 
+				//-> return to query result (json format)
 				//char* payload = "Ok, here is some json response";
 				char* payload = txt;
-				//if (send(s2, str, n, 0) < 0) {
+				//if (send(s2, buffer, n, 0) < 0) {
 				if (send(s2, payload, strlen(payload), 0) < 0) {
 					perror("send");
 					done = 1;

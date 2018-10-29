@@ -36,8 +36,8 @@ do
 	#echo "##############################"
 done
 
-#doas install -o www -g www -m 0500 $source/endpoint_test /var/www/v1
 
+#doas install -o www -g www -m 0500 $source/endpoint_test /var/www/v1
 
 # Suppose you pull a disk from a decommissioned OpenBSD machine and you need to retrieve some files from it. 
 # You want to mount the disk read-only so that you don’t change any of the files on the dis
