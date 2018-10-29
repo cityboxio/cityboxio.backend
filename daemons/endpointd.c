@@ -80,8 +80,9 @@ main(void)
 		//TODO Should be forking a process dedicated to handle this client only
 		//TODO non-blocking mode (MSG_DONTWAIT flag)
 		printf("Connected.\n");
-
-		int buffer_size = 2000000;
+		
+		/* httpd default maxrequestbody is 1048576bytes (1M) */
+		int buffer_size = 1048576;
 		char buffer[buffer_size];
 		done = 0;
 		do {
