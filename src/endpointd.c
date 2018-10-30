@@ -3,14 +3,12 @@
  ** endpointd.c -- the server for endpoint.c;
  **
  **/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
 #include <syslog.h>
-
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -30,13 +28,13 @@ int s, s2, len;
 unsigned t;
 struct sockaddr_un local, remote;
 
-int 
+int
 main(void)
 {
 	//TODO	add pledge
-	
+
 	openlog("opendatahub.commands.daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
-	//TODO	update syslog.conf to log to two seperate files based on 
+	//TODO	update syslog.conf to log to two seperate files based on
 	//	commands.sock, queries.sock per endpoint	
 	//TODO 	customize openlog params
 	//TODO 	close log
@@ -52,7 +50,6 @@ main(void)
 	//strcpy(local.sun_path, SOCK_PATH);
 
 	strlcpy(local.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
-
 	unlink(local.sun_path);
 
 	len = strlen(local.sun_path) + sizeof(local.sun_family+1);
@@ -61,10 +58,9 @@ main(void)
 		exit(1);
 	}
 
-	//TODO refactor into a sock_config() or somthing	
-	//TODO make SOCK_PATH socket permisions and ownership here. 
-	// and not in the setup script
-	//
+	//TODO	refactor into a sock_config() or somthing
+	//TODO	make SOCK_PATH socket permisions and ownership here.
+	// 	and not in the setup script
 	if (chmod(SOCK_PATH, 0777) != 0)
 		//TODO syslog
 		perror("chmod() error");
@@ -77,7 +73,6 @@ main(void)
 		perror("listen");
 		exit(1);
 	}
-
 
 	for(;;) {
 		int done, n;
@@ -115,12 +110,11 @@ main(void)
 				//syslog(LOG_DAEMON, "CQRS command: %s", buffer);
 				syslog(LOG_USER, "CQRS command: %s", buffer);
 				// zero back the str(received message) to hold next request
-				memset(buffer,'\0',sizeof(buffer)); 
+				memset(buffer,'\0',sizeof(buffer));
 				done = 1;
 			}
 
-			if (!done){
-				
+			if (!done) {
 				/* start of reading data from a file */
 				//TODO fix truncation after endoflines
 				FILE *fp;
@@ -129,7 +123,7 @@ main(void)
 				int len=0;
 				fp=fopen("./../DATA/README.md", "r");
 
-				do{
+				do {
 					ch=fgetc(fp);
 					txt[len]=ch;
 					len++;
@@ -141,7 +135,7 @@ main(void)
 			
 				//TODO if the request was a command then this daemon is a command daemon
 				//-> return to client an acknolgment that the their message was resviced(json format)
-				//TODO if the request was a query then this daemon is a query daemon 
+				//TODO if the request was a query then this daemon is a query daemon
 				//-> return to query result (json format)
 				//char* payload = "Ok, here is some json response";
 				char* payload = txt;
@@ -152,7 +146,6 @@ main(void)
 				}
 			}
 		} while (!done);
-
 			close(s2);
 		}
 		return(EXIT_SUCCESS);
