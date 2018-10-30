@@ -12,7 +12,7 @@ echo "httpd configuration updated"
 cp ./config/rc.conf.local /etc/
 echo "/etc/rc.conf.local updated"
 
-source="endpoints"
+source="src"
 bin="bin"
 
 server_ip="192.168.1.202"

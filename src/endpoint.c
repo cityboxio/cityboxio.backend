@@ -13,7 +13,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#include "cbendpoint.h" //TODO use Makefile
+#include "endpoint.h" //TODO use Makefile
 
 //#define SOCK_PATH "/run/endpoint.sock"
 //TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
@@ -36,16 +36,14 @@ setup_sockpath(void)
 	strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
 
 	if (strncmp(current_request, "GET", sizeof("GET")) == 0) {
-		printf("\nsyslog its a GET request\n");
-		
 		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
+		printf("\nsyslog its a GET request\n");
 		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
 	} else if (strncmp(current_request, "POST", sizeof("POST")) == 0) {
 		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
 		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
-		printf("syslog its a POST request");
-
 		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
+		printf("syslog its a POST request");
 		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
 	} else {
 		printf("A json body sayin only GET and POST requests are supported");
@@ -94,6 +92,7 @@ main(void)
 	//len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	//len = strlen(remote.sun_path) + sizeof(remote.sun_family);
 	len = strlen(remote.sun_path) + sizeof(remote.sun_family+1);
+	printf("\nafter len %s\n", SOCK_PATH);
 	if (connect(s, (struct sockaddr *)&remote, len) == -1) {
 		//syslog(LOG_ERR, "daemon socket %s not found", SOCK_PATH);
 		printf("daemon socket %s not found", SOCK_PATH);

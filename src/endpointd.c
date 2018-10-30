@@ -21,6 +21,7 @@
 //	and endpoint.c write case statments for each endpoint?
 //	case SOCK_PATH equal "opendatahub"
 //	case SOCK_PATH equal "rd"
+
 //TODO	if a microservice deployed on a sperate machine;
 //	control which cases gets implmented via Makefile/endpoint.h flags
 
@@ -32,8 +33,10 @@ int
 main(void)
 {
 	//TODO	add pledge
+	//
 
-	openlog("opendatahub.commands.daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	//openlog("opendatahub.commands.daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	openlog("opendatahub", LOG_PID | LOG_NDELAY, LOG_PERROR);
 	//TODO	update syslog.conf to log to two seperate files based on
 	//	commands.sock, queries.sock per endpoint	
 	//TODO 	customize openlog params

@@ -10,4 +10,5 @@ curl -s 192.168.1.202/v1/opendatahub?commands="UserA:$counter"
 #TODO some json tests, try big ones
 #echo $counter
 counter=$((counter+1))
+sleep 2
 done
