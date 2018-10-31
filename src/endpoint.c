@@ -30,10 +30,9 @@
 int s, t, len;
 struct sockaddr_un remote;
 char SOCK_PATH[100];
-char str[80];a
+char str[80];
 
-
-	int
+int	
 setup_sockpath(void)
 {
 	char* current_request = getenv("REQUEST_METHOD");
