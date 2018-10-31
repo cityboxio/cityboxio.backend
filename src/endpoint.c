@@ -13,18 +13,25 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-#include "endpoint.h" //TODO use Makefile
+//#include "endpoint.h" //TODO use Makefile
+
+// Http header for JSON API calls 
+#define HEADER_STATUS "Status: 200 OK\r"
+#define HEADER_CONTENT_TYPE "Content-Type: application/json\r\r"
 
 //#define SOCK_PATH "/run/endpoint.sock"
 //TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
 //TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
 
 
+//TODO function prototypes
+
 // daemon client variables
 int s, t, len;
 struct sockaddr_un remote;
 char SOCK_PATH[100];
-char str[80];
+char str[80];a
+
 
 	int
 setup_sockpath(void)

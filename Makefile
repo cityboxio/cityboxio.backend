@@ -1,1 +1,4 @@
-#makefile
+#${info ${FOO}}
+
+clear:
+	echo "love"

@@ -1,6 +1,6 @@
 /**
  **
- ** endpointd.c -- the server for endpoint.c;
+ ** endpointd.c -- the daemon for endpoint.c;
  **
  **/
 #include <stdio.h>
@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+
+//#include "jsmn.h" //TODO use jsmn to handle jsons
 
 //#define SOCK_PATH "/var/www/run/endpoint.sock"
 #define SOCK_PATH "/var/www/run/opendatahub.commands.sock"
@@ -35,8 +37,8 @@ main(void)
 	//TODO	add pledge
 	//
 
-	//openlog("opendatahub.commands.daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
-	openlog("opendatahub", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	openlog("opendatahub-commands-daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	//openlog("rd", 0, LOG_INFO);
 	//TODO	update syslog.conf to log to two seperate files based on
 	//	commands.sock, queries.sock per endpoint	
 	//TODO 	customize openlog params
@@ -107,7 +109,7 @@ main(void)
 			if (n <= 0) {
 				if (n < 0) perror("recv");
 				printf("CQRS command: %s\n", buffer);
-				syslog(LOG_INFO, "CQRS command: %s", buffer);
+				//syslog(LOG_INFO, "CQRS command: %s", buffer);
 				syslog(LOG_DEBUG, "CQRS command: %s", buffer);
 				//TODO logging should be done to the daemon logs
 				//syslog(LOG_DAEMON, "CQRS command: %s", buffer);
