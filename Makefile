@@ -6,8 +6,10 @@ all:
 	#TODO do allthings inorder on a new machine
 
 readme:
-	#TODO Generate README via `r !tree`
 	echo "# cityboxio.backend" > README
+	echo "" >> README
+	banner citybox.io >> README
+	echo "" >> README
 	tree >> README
 
 #TODO indent(1) sourcefiles
