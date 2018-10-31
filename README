@@ -1,4 +1,53 @@
 # cityboxio.backend
+.
+|-- BUGS.md
+|-- DATA
+|   `-- README.md
+|-- DATA.samples
+|   |-- API_EGY_DS2_en_csv_v2_10086258.csv
+|   |-- API_EGY_DS2_en_csv_v2_10086258.html
+|   |-- API_EGY_DS2_en_csv_v2_10086258.zip
+|   |-- Metadata_Country_API_EGY_DS2_en_csv_v2_10086258.csv
+|   |-- Metadata_Indicator_API_EGY_DS2_en_csv_v2_10086258.csv
+|   |-- cairo.geojson
+|   `-- cities.geojson
+|-- LICENSE
+|-- Makefile
+|-- README
+|-- TODO.md
+|-- bin
+|   |-- apidoc
+|   |-- endpointd
+|   |-- opendatahub
+|   |-- ping
+|   `-- rd
+|-- cli
+|   `-- cbcli.3
+|-- config
+|   |-- httpd.conf
+|   `-- rc.conf.local
+|-- cronjobs
+|   |-- README
+|   |-- city.sh
+|   |-- csvtohtml.awk
+|   |-- jsondb
+|   |-- somejson
+|   `-- worldbank.sh
+|-- daemon.sh
+|-- doc
+|   `-- unixdomain.jpeg
+|-- setup.sh
+|-- src
+|   |-- README
+|   |-- chain.c
+|   |-- chaind.c
+|   |-- endpoint.1
+|   |-- endpoint.c
+|   |-- endpointd.8
+|   `-- endpointd.c
+`-- test
+    |-- test.sh
+    |-- userA.sh
+    `-- userB.sh
 
-hier - layout of the project structure (via `r !tree` from Makefile)
-
+9 directories, 40 files

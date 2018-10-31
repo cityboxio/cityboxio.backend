@@ -5,6 +5,11 @@ source = ./source
 all:
 	#TODO do allthings inorder on a new machine
 
+readme:
+	#TODO Generate README via `r !tree`
+	echo "# cityboxio.backend" > README
+	tree >> README
+
 #TODO indent(1) sourcefiles
 deploy:
 	#TODO make deploy SERVER=api.citybox.io
