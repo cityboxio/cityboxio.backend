@@ -7,7 +7,8 @@
 doas rcctl restart syslogd 
 echo "##############################"
 echo "compiling endpointd daemon"
-cc ./src/endpointd.c -o ./bin/endpointd
+#cc ./src/endpointd.c -o ./bin/endpointd
+cc -D SOCK_PATH='"/var/www/run/opendatahub.commands.sock"' -o ./bin/endpointd -Wall ./src/endpointd.c
 #cc -o $bin/endpointd $source/endpointd.c
 echo "##############################"
 echo "TODO installing endpointd daemon"

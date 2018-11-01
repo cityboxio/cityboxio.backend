@@ -15,17 +15,9 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
-//#include "jsmn.h" //TODO use jsmn to handle jsons
+//TODO #include "jsmn.h" /* use jsmn to handle jsons */
 
-//#define SOCK_PATH "/var/www/run/endpoint.sock"
-#define SOCK_PATH "/var/www/run/opendatahub.commands.sock"
-//TODO	endpointd.h #define or struct of all endpoints?
-//	and endpoint.c write case statments for each endpoint?
-//	case SOCK_PATH equal "opendatahub"
-//	case SOCK_PATH equal "rd"
-
-//TODO	if a microservice deployed on a sperate machine;
-//	control which cases gets implmented via Makefile/endpoint.h flags
+//TODO define gaurds for #define SOCK_PATH 
 
 int s, s2, len;
 unsigned t;
