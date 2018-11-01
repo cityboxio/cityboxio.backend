@@ -12,8 +12,9 @@ echo "httpd configuration updated"
 cp ./config/rc.conf.local /etc/
 echo "/etc/rc.conf.local updated"
 
-source="src"
-bin="bin"
+source="./src"
+bin="./bin"
+#TODO API version
 
 server_ip="192.168.1.202"
 endpoints="opendatahub rd apidoc ping" # array of all the endpoints 

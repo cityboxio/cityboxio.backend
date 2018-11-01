@@ -34,8 +34,12 @@
 |-- cli
 |   `-- cbcli.3
 |-- config
+|   |-- daemon.sh
+|   |-- endpoint.sh
+|   |-- endpointd.sh
 |   |-- httpd.conf
-|   `-- rc.conf.local
+|   |-- rc.conf.local
+|   `-- setup.sh
 |-- cronjobs
 |   |-- README
 |   |-- city.sh
@@ -43,14 +47,13 @@
 |   |-- jsondb
 |   |-- somejson
 |   `-- worldbank.sh
-|-- daemon.sh
 |-- doc
 |   `-- unixdomain.jpeg
-|-- setup.sh
 |-- src
 |   |-- README
 |   |-- chain.c
 |   |-- chaind.c
+|   |-- citybox.1
 |   |-- endpoint.1
 |   |-- endpoint.c
 |   |-- endpointd.8
@@ -60,4 +63,4 @@
     |-- userA.sh
     `-- userB.sh
 
-9 directories, 40 files
+9 directories, 43 files

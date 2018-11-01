@@ -15,36 +15,49 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
+//TODO style9 check and indent
+
 //TODO #include "jsmn.h" /* use jsmn to handle jsons */
 
-//TODO define gaurds for #define SOCK_PATH 
+//TODO define gaurds for #define SOCK_PATH macro into a static global variable 
+#define SOCK_PATH 	"/var/www/run/" SOCK
 
-int s, s2, len;
-unsigned t;
-struct sockaddr_un local, remote;
+int s, s2, len;				/* */
+unsigned t;				/* */
+struct sockaddr_un local, remote;	/* */
 
+//TODO 	each function either read global variables or 
+//	write global variables but never both
+//TODO 	local variables are private static
+
+/*
+ * main()
+ *
+ */
 int
 main(void)
 {
 	//TODO	add pledge
-	//
 
-	openlog("opendatahub-commands-daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
+	printf("%s", getprogname());
+	openlog(getprogname(), LOG_PID | LOG_NDELAY, LOG_PERROR);
+	//openlog("opendatahub-commands-daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
 	//openlog("rd", 0, LOG_INFO);
 	//TODO	update syslog.conf to log to two seperate files based on
 	//	commands.sock, queries.sock per endpoint	
 	//TODO 	customize openlog params
 	//TODO 	close log
 
+	//TODO int create_sockstream()
 	/* Create a new UNIX Socket */
 	if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
-	//if ((s = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) {
+	/* if ((s = socket(AF_UNIX, SOCK_DGRAM, 0)) == -1) { */
 		perror("socket");
 		exit(1);
 	}
 
 	local.sun_family = AF_UNIX;
-	//strcpy(local.sun_path, SOCK_PATH);
+	/* strcpy(local.sun_path, SOCK_PATH); */
 
 	strlcpy(local.sun_path, SOCK_PATH, sizeof(SOCK_PATH));
 	unlink(local.sun_path);

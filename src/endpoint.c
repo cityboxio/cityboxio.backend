@@ -20,6 +20,7 @@
 #define HEADER_CONTENT_TYPE "Content-Type: application/json\r\r"
 
 //#define SOCK_PATH "/run/endpoint.sock"
+//#define SOCK_PATH "/run/"
 //TODO printf("if REQUEST_METHOD is POST and QUERY_STRING commmands then use bind mount write-only\n");
 //TODO printf("if REQUEST_METHOD is GET and QUERY_STRING queries then use bind mount read-only\n");
 
@@ -59,9 +60,8 @@ setup_sockpath(void)
 	printf("\n\n\nREQUEST_METHOD: %s\n", current_request);
 
 	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
-	return 1;
+	return(EXIT_SUCCESS);
 }
-
 	int
 main(void)
 {
@@ -135,8 +135,7 @@ main(void)
 }
 
 
-
-	void
+void
 show_env(void)
 {
 	printf("\n");
@@ -169,3 +168,4 @@ show_env(void)
 	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
 	syslog(LOG_DEBUG, "http enviroment shown");
 }
+
