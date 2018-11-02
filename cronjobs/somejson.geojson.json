@@ -1,8 +1,3 @@
-#!/bin/sh
-#echo "Content-Type: text/plain\n\n"
-#echo "Content-Type: text/html\n\n" #TODO whats the content-type for JSON again??
-echo "Content-Type: text/javascript\n\n" 
-echo '
 {
 	"type": "Feature",
 	"properties": {
@@ -489,4 +484,3 @@ echo '
 ]
   }
 }
-'
