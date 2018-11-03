@@ -19,7 +19,7 @@
 
 //TODO #include "jsmn.h" /* use jsmn to handle jsons */
 
-//TODO define gaurds for #define SOCK_PATH macro into a static global variable 
+//TODO define gaurds for #define SOCK_PATH macro into a static global variable
 #define SOCK_PATH 	"/var/www/run/" SOCK
 
 int s, s2, len;				/* */
@@ -44,7 +44,7 @@ main(void)
 	//openlog("opendatahub-commands-daemon", LOG_PID | LOG_NDELAY, LOG_PERROR);
 	//openlog("rd", 0, LOG_INFO);
 	//TODO	update syslog.conf to log to two seperate files based on
-	//	commands.sock, queries.sock per endpoint	
+	//	commands.sock, queries.sock per endpoint
 	//TODO 	customize openlog params
 	//TODO 	close log
 
@@ -113,12 +113,12 @@ main(void)
 
 			if (n <= 0) {
 				if (n < 0) perror("recv");
-				printf("CQRS command: %s\n", buffer);
-				//syslog(LOG_INFO, "CQRS command: %s", buffer);
-				syslog(LOG_DEBUG, "CQRS command: %s", buffer);
+				printf("CQRS: %s\n", buffer);
+				//syslog(LOG_INFO, "CQRS: %s", buffer);
+				syslog(LOG_DEBUG, "CQRS: %s", buffer);
 				//TODO logging should be done to the daemon logs
-				//syslog(LOG_DAEMON, "CQRS command: %s", buffer);
-				syslog(LOG_USER, "CQRS command: %s", buffer);
+				//syslog(LOG_DAEMON, "CQRS: %s", buffer);
+				syslog(LOG_USER, "CQRS: %s", buffer);
 				// zero back the str(received message) to hold next request
 				memset(buffer,'\0',sizeof(buffer));
 				done = 1;

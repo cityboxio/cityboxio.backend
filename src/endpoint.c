@@ -43,13 +43,11 @@ setup_sockpath(void)
 	strlcat(SOCK_PATH, getprogname(), sizeof(SOCK_PATH));
 
 	if (strncmp(current_request, "GET", sizeof("GET")) == 0) {
-		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
 		printf("\nsyslog its a GET request\n");
 		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
 	} else if (strncmp(current_request, "POST", sizeof("POST")) == 0) {
-		// https://gist.github.com/zautomata/d9930bec72dc3d576df61a6ca926f16d
-		// curl -d "param1=value1&param2=value2" -X POST http://192.168.1.202:80/data
-		strlcat(SOCK_PATH, ".queries.sock", sizeof(SOCK_PATH));
+		strlcat(SOCK_PATH, ".commands.sock", sizeof(SOCK_PATH));
 		printf("syslog its a POST request");
 		printf("\n\nthe socket path:  %s\n\n\n", SOCK_PATH);
 	} else {

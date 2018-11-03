@@ -1,16 +1,21 @@
 #!/bin/sh
-
 counter=0
+#TODO GET tests well alone; POSt doesn't test yet and waits.
+
+
+commands=$(jq . queries.json)
+queries=$(jq . queries.json)
+url="http://192.168.1.202/v1/opendatahub"
 while true
 do
-#curl -s 192.168.1.202/v1/opendatahub?commands="opendatahub-123467890good"
-#curl -s 192.168.1.202/v1/rd?commands="rd-1234678XXXXXXXgood"
-#curl -s 192.168.1.202/v1/opendatahub?commands="opendatahub-good"
-curl -s 192.168.1.202/v1/opendatahub?commands="opendatahub-UserA:sending:command$counter"
-curl -d "param1=value1&param2=value2" -H -X POST 192.168.1.202/v1/opendatahub?queries="opendatahub-UserA:sending:query:$counter"
-#curl -s 192.168.1.202/v1/rd?commands="rd-UserA:$counter"
-#TODO some json tests, try big ones
-#echo $counter
+echo $counter
+curl -G -s $url  --data-urlencode "queries=$queries"
+curl --data-urlencode "{'commands'=[$commands, $commands]}" -X POST $url 
+
+#curl -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json" -X POST 192.168.1.202/v1/opendatahub 
+
 counter=$((counter+1))
-sleep 2
+	
+sleep 1
+
 done
