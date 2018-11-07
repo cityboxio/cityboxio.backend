@@ -142,8 +142,9 @@ gitserver:
 webserver:
 	# 	configure a citybox frontend 
 	#TODO fix it	
-	doas sh $(/bin/rm -rf /var/www/citybox.io)
-	doas sh $(/bin/cp -r ./web /var/www/citybox.io)
+	#doas sh $(/bin/rm -rf /var/www/citybox.io)
+	doas sh $(/bin/rm -rf /var/www/citybox.io);exit;
+	doas sh $(/bin/cp -r ./web /var/www/citybox.io);exit;
 	doas rcctl restart httpd
 	# 	configure a private ports website
 
@@ -169,5 +170,7 @@ deploy:
 	#TODO make deploy SERVER=api.citybox.io
 	#TODO doas rcctl slowcgi restart (execlude from setup.sh)
 	#TODO doas rcctl httpd restart
+	
+	echo  	"pkg_add apg"	
 	echo  	"NOTE: /etc/doas.conf must be appended by"	
 	echo 	"premit presist USER cmd sh"

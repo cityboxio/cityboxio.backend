@@ -23,9 +23,10 @@ counter=0
 commands=$(jq . queries.json)
 queries=$(jq . queries.json)
 #url="http://192.168.1.202/v1/opendatahub"
-url="http://192.168.1.202/v1/authentication"
+url="http://192.168.1.104/v1/authentication"
 
-while true do
+while true 
+do
 	echo $counter
 	curl -G -s $url  --data-urlencode "queries=$queries"
 	#curl --data-urlencode "{'commands'=[$commands, $commands]}" -X POST $url
