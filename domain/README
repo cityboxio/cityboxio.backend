@@ -1,5 +1,6 @@
 #TODO write the DDD literature better
 
+
 ./domain (citybox)
 	/boundcontextA (opendatahub)
 		/domain-language-constructA.sh (upload_data.sh) (command)

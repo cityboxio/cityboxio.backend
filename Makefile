@@ -92,7 +92,24 @@ microservices: clean
 	#TODO (bad idea) a daemon to monitor the logs of commands and transform them into events with full data in ./DATA/opendatahub.json.db so a queries daemon can read them from there.
 	#TODO touch ./DATA/opendatahub.json.eventstore db to append/read all this endpoint events; which if implemented as merkle tree can be used for blockchain.
 	# /usr/local/pgsql/data
+	#TODO 	The install command uses the cp, chown, chmod, and strip commands.
+	# 	Makefile should create and use "citybox" user on obsd 
+	# 	/etc/doas.conf `permit persist $USER cmd install`
+	doas install ./domain/opendatahub-create_event-queries.sh /usr/local/bin/
+	#doas sh /bin/cp ./domain/opendatahub-* /usr/local/bin/
+	#/bin/cp ./domain/opendatahub-* /usr/local/bin/
 
+opendatahub: 
+	#TODO a script to touch domain/opendata* 	
+
+security: 
+	#TODO Public-key cryptography for microservices inter-communication
+	#TODO https://github.com/cisco/cjose
+api_doc: 
+	#TODO generate JSON schema of the API endpoints from the sourcecode heir(bin, domain, etc.)
+	#TODO store it somewhere that makes sense!
+whitepaper: 
+	#TODO laTex whitepaper pdf
 #
 # blockchain shall use same sockets as httpd to communicate with the daemons
 # thus /var/www/run/opendatahub.commands.sock can be used by chain/chaind  
@@ -107,20 +124,15 @@ blockchain:
 #
 databases:
 	#TODO create the hier of ./DATA
-	#TODO where to store a ./DATA in obsd hier i.e. maybe /usr/local/citybox/DATA
+	#TODO 	where to store a ./DATA in obsd hier i.e. maybe /usr/local/citybox/DATA
+	#	or /var/citybox/DATA
 
 #
 #TODO maybe not needed anymore, cleanup and delete it after careful review
 #
-daemons:
-	doas sh ./config/daemon.sh
-	#TODO syslog setup (1.touch syslogfile, 2.restart syslogd)
-
-#
-#TODO maybe not needed anymore, cleanup and delete it after careful review
-#
-endpoints:
-	doas sh ./config/setup.sh
+#daemons:
+#	doas sh ./config/daemon.sh
+#	#TODO syslog setup (1.touch syslogfile, 2.restart syslogd)
 
 #
 #TODO should be the final task for everything to be working fine.

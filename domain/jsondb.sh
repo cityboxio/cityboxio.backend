@@ -8,5 +8,5 @@ db_get () {
 	grep "^$1," database | sed -e "s/^$1,//" | tail -n 1
 }
 
-db_set 42 '{"name":"San Francisco","attractions":["Golden Gate Bridge"]}'
-db_get 42
+#db_set 42 '{"name":"San Francisco","attractions":["Golden Gate Bridge"]}'
+#db_get 42
