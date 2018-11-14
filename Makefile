@@ -61,6 +61,7 @@ openbsd:
 	#TODO update rc.conf.local
 	#TODO update syslogd.conf from ./config #.local
 	#TODO pkg_add jq for working with shellscripts and awk queries 
+	#TODO create a chroot enviroment for bin/events
 
 setup:
 	@banner "citybox.io >"

@@ -1,0 +1,5 @@
+/db dir contains all code nessesary to act with DATA
+
+
+TODO
+- redis script that gets executed from syslogd when an event happens to read/write from redis.
