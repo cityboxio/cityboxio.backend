@@ -17,7 +17,6 @@ cc -D SOCK='"'$sock'"' -D ENDPOINT_NAME='"'$endpoint_name'"' -D DAEMON_TYPE='"'$
 
 elif [ "$daemon_type" == "queries" ]; then
 echo "Creating socks for $daemon_name queries at $sock"
-#cc -D SOCK='"'$sock'"' -o ./bin/$daemon_name -Wall ./src/endpointd.c
 cc -D SOCK='"'$sock'"' -D ENDPOINT_NAME='"'$endpoint_name'"' -D DAEMON_TYPE='"'$daemon_type'"' -o ./bin/$daemon_name -Wall ./src/endpointd.c
 
 else

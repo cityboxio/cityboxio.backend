@@ -1,5 +1,4 @@
-A1 dir to store actual DATA dfasfsafasfasfa maybe use system function call and storevalue in a tmp.
-and return it
-and ask C to read it.
-and then delete tmp.
-hello json from some shellscripts
+/var/citybox/DATA contains all db files and the dir is mounted via external harddrive
+
+This product includes GeoLite2 data created by MaxMind, available from
+<a href="http://www.maxmind.com">http://www.maxmind.com</a>.

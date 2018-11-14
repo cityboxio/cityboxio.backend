@@ -5,6 +5,7 @@
 ################################################################
 bin = ./bin
 source = ./source
+domain = "citybox" #TODO maybe used to specifiy a /var/log/citybox.log to aggregate all the distrubrted microservices under a single file. Good/Bad idea? Bad: reads and write should be seperated? Good: single file for timelined investigation.
 
 all:
 	#TODO do allthings inorder on a new machine
@@ -58,6 +59,7 @@ openbsd:
 	#TODO configure /etc/doas.conf for user citybox to run things 
 	#TODO update httpd configuration
 	#TODO update rc.conf.local
+	#TODO update syslogd.conf from ./config #.local
 	#TODO pkg_add jq for working with shellscripts and awk queries 
 
 setup:
