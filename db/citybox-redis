@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# redis database helper script
+#
+
+#redis-cli INCR id:users
+#redis-cli SET user:{id} '{"name":"Fred","age":25}'
+#redis-cli SADD users {id}
+
+#TODO 	configure auth redis server here
+# 	https://redis.io/commands/auth
+#TODO   configure accessing a remote-redis server over network
+#	if needed!
+#TODO 	For extra performance use C instead of shellscripting 
+#	for this driver
+#TODO 	use hashs to save memory
+#	https://redis.io/topics/memory-optimization
+#NOTE 	Namespacing follows the following convention
+#	"endpoint:id value"
+
+key=$1
+shift
+#value="'"$@"'" #TODO santize input
+value=$@ # 2nd to rest of argument in case of spaces
+echo $value
+redis-cli SET $key "$value"
+redis-cli GET $key 
+#redis-cli HSET datasource:dataset field somevalue
+#redis-cli HGET $key 
+
+#TODO Make a flushall function
+#redis-cli flushall
+
+#TODO Make a redis to csv function
+#redis-cli --csv lrange mylist 0 -1
+
+#TODO query for pattern of keys
+#redis-cli --scan --pattern '*-11*'

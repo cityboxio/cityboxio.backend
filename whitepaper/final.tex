@@ -1,5 +1,20 @@
 simplicity always give birth to flexibility - mo (blockchain ready). simple code is fast code. Unix phiosphy. less is more.
 
+- commands should either throw an exception or raise one or more events.
+
+
+- Commands are inputs representing instructions to do something.(./domain/domain_constructs as Eric Evans says Translation blunts communication and makes knowledge crunching anemic.)
+- Events are outputs representing historical facts of what was done. (/var/log/cityboxio/citybox.events.log)
+- Event handlers can listen events in order to issue commands, helping coordinate the different parts of the system. (syslog.conf and syslogd)
+
+
+Having one command create another command causes ambiguity in the general meaning of commands and events.
+If one command "triggers" another command, it is implying that a command is "an historical fact of what was done". This contradicts the intent of these two types of messages, and could become a slippery path, in that other developers could trigger events from events, which could lead to corrupt data and eventual inconsistency.
+
+Rule: commands can't trigger other commands
+Rule: commands do somthing and log it after its done as an event.
+
+
 syslogd.config to monitor eventstream.log and run shellscripts to update the query databases.
 BSD syslogd allows log messages to be piped to a program as well as written to one or more files.
 implementation of a BSD log monitor often begins with the creation of a program which accepts formatted log messages via
@@ -11,6 +26,13 @@ log events to program that update database or a program that pass to multiple da
 
 For maximum performance speed, openbsd supports wirting log messages to an in-memory buffer, 
 which allows logging on systems that have no writable disk i.e. RaspberryPi and similar.
+
+
+A command handler receives a command and brokers a result from the appropriate aggregate. "A result" is either a successful application of the command, or an exception. This is the common sequence of steps a command handler follows:
+- Validate the command on its own merits.
+- Validate the command on the current state of the aggregate.
+- If validation is successful, 0..n events (1 is common).
+- Attempt to persist the new events. If there's a concurrency conflict during this step, either give up, or retry things.
 
 
 Databases are state-only. 
@@ -76,3 +98,4 @@ bib:
 - https://arxiv.org/pdf/1807.03662.pdf (trialchain: A blockchain-platform for medical data using multichain)
 - https://logsentinel.com/white-paper/
 - https://openbsd.org/papers/bsdcan-signify.html
+- http://www.cqrs.nu/faq (good defeniations)
