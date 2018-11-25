@@ -1,3 +1,37 @@
+
+In C and you want to enter a chroot you can do so directly using the chroot() function:
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main(void) {
+     FILE *f;
+
+     /* chroot */
+     chdir("/tmp");
+     if (chroot("/tmp") != 0) {
+         perror("chroot /tmp");
+         return 1;
+     }
+
+     /* do something after chrooting */
+     f = fopen("/etc/passwd", "r");
+     if (f == NULL) {
+         perror("/etc/passwd");
+         return 1;
+     } else {
+         char buf[100];
+         while (fgets(buf, sizeof(buf), f)) {
+              printf("%s", buf);
+         }
+     }
+     return 0;
+}
+
+use chroot inside endpointd.c to safely execute the ./domain executables as needed....
+
+ 
+
 simplicity always give birth to flexibility - mo (blockchain ready). simple code is fast code. Unix phiosphy. less is more.
 
 - commands should either throw an exception or raise one or more events.
@@ -99,3 +133,4 @@ bib:
 - https://logsentinel.com/white-paper/
 - https://openbsd.org/papers/bsdcan-signify.html
 - http://www.cqrs.nu/faq (good defeniations)
+- https://muut.com/blog/technology/redis-as-primary-datastore-wtf.html

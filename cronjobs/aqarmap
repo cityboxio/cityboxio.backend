@@ -1,0 +1,82 @@
+#!/bin/sh 
+
+# Usage:
+# forsale and rent:
+#	aqarmap sale cairo el-maadi
+#	aqarmap sale cairo
+#	aqarmap rent alexandria
+#
+#	aqarmap nhood cairo el-maadi
+#
+#	Proper usage should start with area then attribute-based actions.
+# 	aqarmap all nhood some_attribute_to_nhood 
+# 	aqarmap cairo nhood 
+# 	aqarmap alexandria nhood some_attribute_to_nhood 
+#
+
+#TODO 	use spell(1) and custom map dicfiles to recongize mistakes in 
+#	spelling different areas.
+#	Make a utility that accepts 
+#	mytool -(c)andidates "country" "adminzone1" "adminzone2" "adminzone3"
+#	and return a list of candidates thus that crawlers can check the ones
+#	that work and continue crawling with it "greedy" approach.
+#	Also mytool should store according to a more standarized citycode or somthing.
+#	That way our database would be clean for integration with others.
+#
+
+#TODO 	More datascience tricks. Ref: https://www.datascienceatthecommandline.com/
+#	https://www.datascienceatthecommandline.com/chapter-7-exploring-data.html 
+#
+
+#TODO	More unix tools in the base. Ref: https://intoli.com/blog/sitemaps-in-bash/
+#	hxnormalize(1) is not in base; use when nessesary.		
+#	pup(1) seems a good alternative to w3c hxnormalize
+
+#TODO 	Write a tool to create events from csv datasets.
+#	Store stuff as event datums instead of whole datasets.
+#	Then query things into reports afterwords.
+#	And getrid of the collected tmp/datasets as events are
+#	the single source-of-truth in the system.
+#
+
+#baseurl="https://egypt.aqarmap.com/en/"
+#url="neighborhood/#{ARGV[1]}/#{hood.gsub(" ", "-")}" 
+#url=$baseurl+$url
+url="https://egypt.aqarmap.com/en/neighborhood/cairo/el-maadi/"
+url=`curl -s $url`
+
+#
+#	Average Appartement Price 
+#
+avg_apt_price_el="div.avg-price-widget-container:nth-child(1) > div:nth-child(1) > span:nth-child(1)"
+avg_apt_price=$(
+		echo -e $url | hxnormalize -x \
+		| hxselect $avg_apt_price_el \
+		| hxselect -c "span.integer" \
+		| awk '{print $1;}'
+	       )
+
+#
+#	Average Villa Price
+#
+avg_villa_price_el="div.avg-price-widget-container:nth-child(2) > div:nth-child(1) > span:nth-child(1)"
+avg_villa_price=$(
+		echo -e $url | hxnormalize -x 		\
+		| hxselect $avg_villa_price_el 	\
+		| hxselect -c "span.integer" 	\
+		| awk '{print $1;}'
+		)
+
+#	Log to a syslog of crawling.log or spider.log or better rightat 
+#	/var/log/cityboxio/citybox.events.log.
+# 	And generate csv out of logs at a later point with another program 	
+log(){
+# logger -i -t citybox-events "create_event_succeeded $@"
+#echo "$avg_apt_price EGP, $avg_villa_price EGP"
+
+# -t citybox-events configured at /etc/syslog.conf
+	logger -i -t citybox-events "datum_scrapping_succeeded: neighbourhood: maadi, average_apt_price: $avg_apt_price EGP"
+		logger -i -t citybox-events "event: datum_scrapping_succeeded, neighbourhood: maadi, average_villa_price:  $avg_villa_price EGP"
+}
+
+log $avg_apt_price $avg_villa_price

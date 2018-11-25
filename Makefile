@@ -91,6 +91,15 @@ microservices: clean
 	doas sh ./config/endpoint.sh v1 opendatahub
 	doas sh ./config/endpointd.sh commands opendatahub
 	doas sh ./config/endpointd.sh queries opendatahub
+	
+	doas sh ./config/endpoint.sh v1 authorization 
+	doas sh ./config/endpointd.sh commands authorization 
+	doas sh ./config/endpointd.sh queries authorization 
+	
+	doas sh ./config/endpoint.sh v1 authentication 
+	doas sh ./config/endpointd.sh commands authentication 
+	doas sh ./config/endpointd.sh queries authentication 
+
 	#TODO capture domain-language into shellscripts in ./domain and execute them; this task creates a domain.	
 	#TODO (bad idea) a daemon to monitor the logs of commands and transform them into events with full data in ./DATA/opendatahub.json.db so a queries daemon can read them from there.
 	#TODO touch ./DATA/opendatahub.json.eventstore db to append/read all this endpoint events; which if implemented as merkle tree can be used for blockchain.
@@ -121,6 +130,21 @@ blockchain:
 	#TODO createblock, blockhash, generateblock, storeblock, isblockvalid,
 	#	broadcastblock, listallblocks, list/addpeers.
 	#	blocks-of-events... a blockchain of events related to citybox.
+
+#
+# Infrastructure DNS, Email, Sourcecontrol 
+#
+dns:
+	#	configure DNS unbound
+email:
+	#	configure smtpd
+gitserver:
+	#	configure gitserver
+webserver:
+	# 	configure a citybox frontend 
+	doas sh $(/bin/rm -rf /var/www/citybox.io)
+	doas sh $(/bin/cp -r ./web /var/www/citybox.io)
+	# 	configure a private ports website
 
 #
 # Deal with all databases for production

@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8" />
+		<title>citybox.io</title>
+		<link rel="stylesheet" href="css/leaflet.css" type="text/css"/>
+	
+		<!-- 
+	  <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+		-->	
+		<link href="css/comfortaa.css" rel="stylesheet">
+		
+		<link href="css/easy-autocomplete.min.css" rel="stylesheet" type="text/css">
+		<link href="css/easy-autocomplete.themes.min.css" rel="stylesheet" type="text/css">
+	
+		<!-- 
+	  <link rel="stylesheet" href="css/fontawesome.all.min.css" />
+	  <script type="text/javascript" src="js/fontawesome.all.min.js"></script>
+	  -->
+	  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> 
+
+		<link href="css/tinytoggle.min.css" rel="stylesheet">
+
+		<!-- Leaflet Plugins -->
+		<link rel="stylesheet" href="css/leaflet.draw.css" />
+		<link rel="stylesheet" href="css/Control.MiniMap.min.css" />
+
+		<link rel="stylesheet" type="text/css" href="css/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
+		<link rel="stylesheet" type="text/css" href="css/normalize.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/skeleton.css"/>
+		<link rel="stylesheet" type="text/css" href="css/vex.css"/>
+		<link rel="stylesheet" type="text/css" href="css/vex-theme-wireframe.css"/>
+
+		<link rel="stylesheet" href="css/ion.rangeSlider.css" />
+		<link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
+
+		<!--  <link rel="stylesheet" href="css/jquery.gridster.min.css" /> -->
+		<link rel="stylesheet" href="css/gridstack.css" />
+		
+		<!-- <link rel="stylesheet" href="css/noty.css" /> -->
+		
+		<link rel="stylesheet" href="css/notify-metro.css" />
+
+		<link href="css/main.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body>
+		<b style="color: white; background-color: red"> 
+			&nbsp; &nbsp;
+			βeta
+			&nbsp; &nbsp;
+		</b>
+		<!--
+	  <img src="img/citybox.png" id="loader">
+		-->
+
+		<!--
+	  <div id="map" style="width: 900px; height: 900px"></div>
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.css" type="text/css">
+	  <link href="css/easy-autocomplete.themes.min.css.map" rel="stylesheet" type="application/json">
+	  <link href="css/maps/easy-autocomplete.themes.min.css.map" rel="stylesheet" type="application/json">
+	  <link href="css/maps/easy-autocomplete.min.css.map" rel="stylesheet" type="text/css">
+		-->
+		<div class="header-container">
+			<!-- columns should be the immediate child of a .row -->
+			<div class="row">
+				<div class="five columns">
+					<img class="logo" src="img/citybox.png" alt="citybox"/>
+					</br>
+					<div id="typed-strings">
+						<!--
+	      <p><strong>opendata</strong>hub | <strong>worldcities</strong></p>
+	      <p><strong>opendata</strong>hub <strong>sandbox</strong> | <strong>worldcities</strong></p>
+	      <p><strong>opendata</strong>hub <strong>sandbox</strong> | <strong>worldcities</strong></p>
+	      <p>sandboxing <strong>worldcities</strong></p>
+	      <p><strong>sandboxing</strong> <strong>worldcities</strong></p>
+	      <p><strong>sandboxing</strong> | world<strong>cities</strong></p>
+						-->	
+						<p><strong>urban</strong>sandboxing | <strong>worldcities</strong></p>
+						<p>we <i class="fas fa-heart"></i> <strong>opensource</strong></p>
+						<p>we <i class="fas fa-heart"></i> <strong>hackathons</strong></p>
+						<p>we <i class="fas fa-heart"></i> <strong>opendata</strong></p>
+						<p><strong>urban</strong>sandboxing | <strong>worldcities</strong></p>
+					</div>
+					<span id="typed"></span>
+				</div>
+				<div class="seven columns">
+					<!--<div class="copyright"> -->
+					<div class="citybox-menu">
+						<b>
+							<a class="" href="#">urban sandboxing</a>
+						</b> 
+						| 
+						&nbsp;
+						<a class="menu-link" href="#">map</a>
+						&nbsp;
+						<a class="menu-link" href="#">api documentation</a>
+						&nbsp;
+						<a class="menu-link" href="#">opendatahub</a>
+						</br>
+						<b>
+							<a class="" href="#">
+								research & development
+							</a>
+						</b>
+						|
+						&nbsp; 
+						<a class="menu-link" href="#">opensource</a>
+						&nbsp; 
+						<a class="menu-link" href="#">openresearch</a>
+						&nbsp; 
+						<a class="menu-link" href="#">hackathons</a>
+						</br>
+						<b>
+							<a class="" href="#">
+								philosophy
+							</a>
+						</b>
+						|	
+						&nbsp;
+						<a class="menu-link" href="#">mission statment</a>
+						&nbsp;
+						<a class="menu-link" href="#">talent</a>
+						&nbsp;
+						<a class="menu-link" href="#">openculture</a>
+					</div>
+					</br>
+					</div>
+				</div>
+			</div>
+			</br>
+			<hr>
+			<div class="citybox-sandbox-searchbar-container">
+				<!-- 
+	    <input class="searchbar" id="categories-basic"/>	
+				-->
+				<div class="row">
+					<div class="six columns">
+						<!--						
+	      Great idea? add a horizontal slickslider on top of the map very wide; it shall contain diferent slides of different components that a user choose to load on the map; and user can navigate of the settings(enabled) components via left/right arrows. slides and components background should be transparent. 
+	      </br>
+	      standarize the use of animate.js to handle interactions of buttons, etc. instead of custom js/css
+	      </br>
+	      description of timeline point and when a point is hovered the opacity of the associated data that is the same color as the point change making it more visible than the rest of the mapped data. when a point is clicked its color change and this description contains a button to delete the dataset from the map and the timeline. 5 years in the future prediction i.e. 2019, 2020, 2021, 2022, 2023					
+		TODO: when mouseover a controller (parent div) like timeline or datasources map clicking is disablled, when mouseout enabled.	
+						-->
+						component title(slide): info 
+						<!-- https://openlayers.org/en/latest/examples/ -->
+					</div>
+					<div class="five columns">
+						<input class="searchbar" id="categories-basic" />	
+					</div>
+				</div>
+			</div>
+			</br>
+			<div id="map" class="overlay"></div>
+			</br>
+			<div class="citybox-sandbox-timeline-parent-container">
+				<div class="row">
+					<div class="twelve columns">
+						recommendation engine(a collberative filtering feature)	
+						</br>
+						rating heart next to timeline to rate quality of a dataset	
+						<i class="fas fa-cog"></i>
+					</div>
+				</div>
+				<!--
+	    <div class="row">
+	    <div class="six columns">
+	    <style>
+.grid-stack {
+	/* 
+	 * background-color: #18bc9c;
+	 */
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}
+
+	   .grid-stack-item-content {
+		   color: #2c3e50;
+		   text-align: center;
+		   background-color: white;
+		   box-shadow: 0 4px 8px 0 #18bc9c, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	   }
+	    </style>
+
+	    <div>
+		    <a class="btn btn-default" id="load-grid" href="#">Load</a>
+		    <h1><i class="fas fa-save" id="save-grid"></i></h1>
+		    <h1><i class="far fa-trash-alt" id="clear-grid"></i></h1>
+	    </div>
+	    <div class="grid-stack" style="min-height: 300px !important; max-height:300px !important">
+	    </div>
+	    </div>
+	    <div class="six columns">
+		    grid2	
+	    </div>
+	    </div>
+	    -->
+
+			</div>
+
+		</div>
+		</br>
+		<hr>
+		</br>
+		<div id="timeline"></div>
+		<!-- .container is main centered wrapper -->
+		<div id="citybox-datasource-nav" class="citybox-datasource-nav-container">
+			<!-- columns should be the immediate child of a .row -->
+			<div class="row">
+				<div class="six columns">
+					<div class="fourth columns arrows">
+						<i id="slider1up" class="fas fa-angle-up arrows"></i>
+					</div>
+				</div>
+			</div>
+			<!-- just use a number and class 'column' or 'columns' -->
+			<div class="row">
+				<div class="six columns">
+					<div class="fourth columns sliderfade">
+						<div class="slider slider1">
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceA</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceB</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceC</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceD</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceE</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceF</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceG</a>
+							</div>
+
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceH</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceI</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceK</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceL</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceM</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceN</a>
+							</div>
+
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceO</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceP</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceQ</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceR</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceS</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceT</a>
+							</div>
+
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceU</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceV</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceW</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceX</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceY</a>
+							</div>
+							<div class="citybox-datasource">
+								<a class="btn btn-dark btn-big">datasourceZ</a>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- there are a few shorthand columns widths as well -->
+			<div class="row">
+				<div class="six columns">
+					<div class="fourth columns arrows">
+						<i id="slider1down" class="fas fa-angle-down arrows"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="sandboxing" class="">
+			<b><h2>urban sandboxing</h2></b>
+			Through our urbansandboxing systems you can have a <b style="color: red;">live</b> interaction. update data, and see it rightway. Urbansandoxing is opendatahub + openAPI + interactive map UI.
+			<div class="row">
+				<div class="six columns">
+					<b><h4>map</h4></b>
+					explain what the map can do and how to use. and link to it. and show a gif of various usage of the map and how cool it can be.
+				</div>
+			</div>
+			</br>
+			</br>
+			<div class="row">
+				<div class="six columns">
+					<b><h4>api documentation</h4></b>
+					<b style="color: red;">live</b> @ <b>https://api.citybox.io/v1</b>
+					</br>
+					generate anonymous apikey button
+					<!--
+	     Use our interactive api documentation to sync with the map and vice-versa.
+	     Internal 
+	     dashboard is map+apidocs+opendatahub 
+	     https://api.citybox.io/v1/dashboard?commands=
+	     https://api.citybox.io/v1/dashboard?queries=
+
+	     </br> 
+	     Internal 
+	     POST https://api.citybox.io/v1/rd?commands=
+	     GET https://api.citybox.io/v1/rd?queries=
+
+	     </br> 
+	     Internal  
+	     POST https://api.citybox.io/v1/philosophy?commands=
+	     GET https://api.citybox.io/v1/philosophy?queries=
+	     </br> 
+	     External 
+	     POST https://api.citybox.io/v1/opendatahub?commands=
+	     GET https://api.citybox.io/v1/opendatahub?queries=
+	     </br> 
+	     External 
+	     POST https://api.citybox.io/v1/users?commands=
+	     GET https://api.citybox.io/v1/users?queries=
+	     when a dataset is uploaded via anonymous or user then they get transformed as server-side commands and logged/evented into subsets of csv portions! 
+					-->
+					<table style="width:100%;
+					height:500px;
+					overflow-y:scroll;
+					display:list-item;
+					">
+						<thead>
+							<tr> 
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>	
+							<tr>
+								<td>
+									<b>GET</b> 
+									</br>
+									<b>URL</b>/endpointA 
+									</br>
+									<b>Queries</b>endpoint queries dropdownlist
+									</br>
+									<b>PARAMS</b>a testarea for entering params and populating selected queries.
+									</br>
+									<button onclick="notify('white')">execute</button>
+									</br>
+									autocopy button of the request in curl(1)	
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>POST</b> endpointA url + a testarea for entering params.
+									</br>
+									endpoint commands dropdownlist
+									</br>
+									<button onclick="notify('white')">execute</button>
+									</br>
+									autocopy button of the request in curl(1)	
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="six columns">
+						</br>
+						</br>
+						</br>
+						</br>
+						</br>
+						<div style="
+						height:500px;
+						overflow-y:scroll;
+						">
+							<b>server response</b> 
+							</br>
+							notify: response header of url with params..
+							</br>
+							notify: response body of url with params..
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+							</br>
+						</div>
+				</div>
+			</div>
+			</br>
+			</br>
+			<div class="row">
+				<div class="six columns">
+					<b><h4>opendatahub</h4></b>
+					</br>
+					In today's connected world opendata is everywhere. We scope our <b>BigData</b> cultivation towards a city-based focus, both interms of data acquisition and utilization.
+					Data storage - Data mining - Data analysis - Data Visualisation.
+					</br>
+					Opendata is data that anyone can access, use or share. 
+					</br>
+					IPFS
+					</br>
+					We capture data by design (eventsourcing, CQRS).
+					</br>
+					allow uploading of datasources\datasets, record who uploaded, when and descriptions, etc. backend check for duplications
+					</br>
+					allow rating of datasource\datasets to collectivly decide the quaitly of the data uploaded.
+					</br>
+					We welcome everyone to use our opendatahub API and integrate with their applications. 
+					</br>
+					We welcome everyone to use our <b>Bulk I/O</b> web interface to download/upload data 
+					</br>
+					left: container to dragndrop datasets and download them in one pack.
+					</br>
+					right: infinite verticalscroll of all datasource:dataset as gridstack widgets.
+					</br>
+					we accept the following formats csv, pdf, geojson.
+					</br>
+					button that opens a modal of accepting files and gives its metadata, etc.
+					</br>
+					email the downloads to yourself or others; magiclink download; different zipping formats;
+					</br>
+					magiclink avialable download 48h; TODO opentracker on tracker.citybox.io 
+				</div>
+				<div class="six columns">
+					</br>
+					</br>
+					</br>
+					Bulk I/O - download/upload opendata in bulk sets  
+					</br>
+					the more data you upload the more data your download quota/month. gamification for a sharing openculture.	
+					</br>
+					when magnet link pressed; notify: sending a magnet generation request; notify: receving magnet; notify: magnet link copied to clipboard
+					</br>
+					TODO slider of all the datasources logos here.
+				</div>
+			</div>
+			<div class="row">
+				<div class="twelve columns">
+					<table style="width:100%;
+					height:300px;
+					overflow-y:scroll;
+					display:list-item;
+					">
+						<thead>
+							<tr> 
+								<th>datasource</th>
+								<th>dataset</th>
+								<th>metainfo</th>
+								<th>size</th>
+								<th>license</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>	
+							<tr style="">
+								<td>worldbank</td>
+								<td>dataset1</td>
+							<td>dfdfafafasfaf</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+
+						<tr>
+							<td>worldbank</td>
+							<td>dataset1</td>
+							<td>info</td>
+							<td>2MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<!--	<i class="far fa-check-square"></i> -->
+									<i class="fas fa-database"></i>
+								</h5>
+							</td>
+						</tr>
+						<tr>
+							<td>worldbank</td>
+							<td>dataset2</td>
+							<td>info</td>
+							<td>1MB</td>
+							<td>cc</td>
+							<td>
+								<h5>
+									<button onclick="notify('white')">testme</button>
+									<script>
+										function notify(style) {
+											$.notify({
+												title: 'opendatahub',
+												text: 'click <i class="fas fa-database" style="color:green"></i> to add to your downloads</br>some other opendatahub notifications',
+												            image: "<img src='img/icon.png'/>"
+												// for a job in progress 
+												//image: "<img src='img/icon.gif'/>"
+											}, {
+												style: 'metro',
+												className: style,
+												autoHide: true,
+												clickToHide: true
+											});
+										}
+									</script>
+									<i class="fas fa-database" style="color:green"></i>
+								</h5>
+							</td>
+						</tr>
+						<tbody>	
+					</table> 
+				</div>
+			</div>
+			</br>
+			</br>
+
+			
+			<div class="row">
+				<div class="six columns">
+					dragdrop upload area for datasets to be uploaded via UI. so developers may use their own webscrapping programs and upload files here via API or UI to get a quota to download other files [idea].
+					<h1><i class="fas fa-upload"></i></h1>
+					<!-- https://blueimp.github.io/jQuery-File-Upload/index.html -->
+				</div>
+				<div class="six columns">
+					</br>
+					<h5>total: 232MB | quota before, after</h5> US$5/5GB crypto donation bar
+					</br>
+					<h5>minimum donation accepted: US$5</h5>
+					<!--
+	     <i class="fab fa-btc"></i>
+	     <i class="fab fa-ethereum"></i>
+	     <i class="fas fa-dollar-sign"></i>
+	     <i class="fas fa-donate"></i>
+	     <i class="fas fa-hand-holding-heart"></i>
+					-->				
+					</br>
+					<input type="text" id="range" value="" name="range" style="font-size: 32px" />
+					</br>
+					</br>
+					<h1>
+						<div class="two columns">
+							<i class="fas fa-download"></i>
+						</div>
+						<div class="two columns">
+							<i class="fas fa-magnet fa-rotate-180"></i>
+						</div>
+						<div class="two columns">
+							<i class="fas fa-file-archive"></i>
+						</div>
+						<div class="two columns">
+							<i class="fas fa-mail-bulk"></i>
+						</div>
+					</h1>
+				</div>
+			</div>
+
+		</div>
+		</br>
+		</br>
+		<hr>
+		</br>
+		<div id="rd" class="">
+			<b><h2>research & development</h2></b>
+			the right and most efficient way to handle data gets more and more difficult. Additionally new laws, guidelines and external regulations arise, such as the EU General Data Protection Regulation (GDPR). All business divisions in every industry sector are affected by the GDPR. The Blockchain Technology offers to be the ideal key technology in all relevant areas by guaranteeing trust, anonymization, safety against manipulation, transparency and immutability.
+			<div class="row">
+				<div class="six columns">
+					</br>
+					<b><h4>opensource projects</h4></b>
+					Our stack is opensource.
+					BCHS standards; man pages are your new best friend. 	
+					openbsd and our code quality highstandards POSIX compliance, GNU/Linux..
+					</br>
+					architecture principles 
+					</br>
+					eventsourcing to express system interaction intents for the duration of their lifespans in the system's domain-language.
+					</br>
+					<b><h6>- worldcities blockchains<h6></b> technology for urban-tech (TBA)
+							</br>
+							<b>
+								<h6>- city timelapse project<h6>
+							</b>
+							technology for urban-tech (TBA)
+							</br>
+							describe citybox.io eventsourcing CQRS and different databases openbsd architecture via a diagram to intice others interest in working with us. <b>Designed with bigdata in mind</b>, our Event-driven Architecture grants that no data is every lost via its implementation as an amend-only, immutable blockchain. talk about our ISC license and why we favor it. 
+							</br>
+							</br>
+							<div style="text-align: right !important; padding: 20px;">
+								<a class="btn btn-dark btn-big" style="min-width: 100% !important">
+									<b>sponsor an opensource project</b> 
+								</a> 
+							</div>
+
+				</div>
+				<div class="six columns">
+					dwm suckless; ii; openbsd logo; a stack of coding standards logos i.e. "javascript coding standard" CERT etc.
+					<img src="img/opensource.png" style="width: 50%;" alt="ISC license"/>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="twelve columns">
+					<table style="width:100%">
+						<tr>
+							<th>title</th>
+							<th>description</th>
+							<th>manpage</th> <!-- cool html manpage https://kristaps.bsd.lv/sblg/sblg.1.html -->
+							<th>website</th>
+							<th>contributors</th>
+							<th>sponsors</th>
+						</tr>
+						<tr>
+							<td>worldbank(1)</td>
+							<td>POSIX complianed shell script for performing periodic data scraping on worldbank.org</td>
+							<td>`man 1 worldbank` -modal for html manpage</td>
+							<td><a class="" href="#">https://xyz.github.io</a></td>
+							<td>contributors</td>
+							<td>sponsorA</br>sponsorB</td>
+						</tr>
+						<tr>
+							<td>shodan-city</td>
+							<td>get city-based data from shodan</td>
+							<td>modal for html manpage</td>
+							<td>https://xyz2.github.io</td>
+							<td>contributors</td>
+							<td>cityofdubai</td>
+						</tr>
+						<tr>
+							<td>citygeojson</td>
+							<td>a unix filter utility. input: a dataset; check for city keywords; output: the dataset associated with geojson of the identified cities. that way it gets mapped easily.</td>
+							<td>citygeojson(1)</td>
+							<td>https://xyz2.github.io</td>
+							<td>contributors</td>
+							<td>cityofdubai</td>
+						</tr>
+
+					</table> 
+				</div>
+			</div>
+			</br>
+
+			</br>
+			<div class="row">
+				<div class="six columns">
+					<b><h4>openresearch</h4></b>
+					Open research is research conducted in the spirit of free and open-source software. Much like open-source schemes that are built around a source code that is made public, the central theme of open research is to make clear accounts of the methodology freely available via the internet, along with any data or results extracted or derived from them. This permits a massively distributed collaboration, and one in which anyone may participate at any level of the project. 
+					https://en.wikipedia.org/wiki/Open_research 
+					We work with our urban-innovation community towards an openculture of collaborating on Whitepapers, presentations, proof-reading, academic research. urban studies papers.
+					</br>
+					</br>
+					<div style="text-align: right !important; padding: 20px;">
+						<a class="btn btn-dark btn-big" style="min-width: 100% !important">
+							<b>submit a letter of intent</b> 
+						</a> 
+					</div>
+				</div>
+				<div class="six columns">
+					</br>
+					</br>
+					</br>
+					a slickslider of techies giving talks at conferences.
+				</div>
+			</div>
+			</br>
+			</br>
+			</br>
+			<div class="row">
+				<div class="twelve columns">
+					<table style="width:100%">
+						<tr>
+							<th>publication</th>
+							<th>author(s)</th>
+							<th>synopsis</th>
+							<th>keywords</th>
+							<th>download</th>
+						</tr>
+						<tr>
+							<td>Towards Urban Sandboxing</td>
+							<td>Mazen Helmy</td>
+							<td>whitepaper introducing the concept of urban sandboxing</td>
+							<td>urban studies, urban sandboxing, urban innovation</td>
+							<td>
+								<h1><i class="fas fa-download"></i></h1>
+							</td>
+						</tr>
+						<tr>
+							<td>citybox.io architecture</td>
+							<td>...</td>
+							<td>TODO: laTex template for obsd pdf; whitepaper primarily discussing the architecture of data systems and the transformation of data into events; unix philosphy in distrubted systems.</td>
+							<td>event sourcing, CQRS, data-intensive applicationks, unix philosphy</td>
+							<td>
+								<h1><i class="fas fa-download"></i></h1>
+							</td>
+						</tr>
+
+						<tr>
+							<td>citybox.io hackathon model</td>
+							<td>...</td>
+							<td>reference obsd, australian gov, etc.</td>
+							<td>....</td>
+							<td>
+								<h1><i class="fas fa-download"></i></h1>
+							</td>
+						</tr>
+
+					</table> 
+				</div>
+			</div>
+			</br>
+			<div class="row" style="height: 100px !important">
+				<div class="six columns">
+					<b><h4>hackathons</h4></b>
+					We invite multiple startups and coperations to our hackathons for integrating their APIs with ours.
+					table of city,country, type(online, onsite), category(health, finance, transportation, etc.), fun(sponsers, etc.) https://www.patreon.com
+					</br>
+					</br>
+					<div style="text-align: right !important; padding: 20px;">
+						<a class="btn btn-dark btn-big" style="min-width: 100% !important"><b>become a hackathon sponser</b>
+						</a>
+					</div>
+					</br>
+					Download our hackathon managment pack to learn about how to conduct a citybox hackathon.
+					</br>
+					Support your city by applying as a hackathon sponser or manager. 
+					</br>
+					</br>
+					<div style="text-align: right !important; padding: 20px;">
+						<a class="btn btn-dark btn-big" style="min-width: 100% !important"><b>become a hackathon manager</b></a> 
+					</div>
+					</br>
+					</br>
+				</div>
+				<div class="six columns" >
+					<div id="citybox-hackathon-slider-container">
+						<div id="citybox-hackathon">
+							<div class="citybox-hackathon-photo">
+								<img src="img/hackathons/hack1.small.jpg" />
+							</div>
+					<div class="citybox-hackathon-photo">
+						<img src="img/hackathons/hack2.small.jpg" />
+					</div>
+					<div class="citybox-hackathon-photo">
+						<img src="img/hackathons/hack3.small.jpg" />
+					</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+			</br>
+			</br>
+			</br>
+			<div class="row">
+				<div class="twelve columns">
+					<table style="width:100%">
+						<tr>
+							<th>start</th>
+							<th>end</th>
+							<th>city</th>
+							<th>type</th>
+							<th>vertical focus</th>
+							<th>sponsers</th>
+							<th>awards</th>
+						</tr>
+						<tr>
+							<td>TBA</td>
+							<td>TBA</td>
+							<td>Tokyo, Japan</td>
+							<td>Online</td>
+							<td>Automotive, Banking, Education, Engineering, Energy </td>
+							<td>
+								coworkingspaceA
+								</br>
+								coworkingspaceB
+								</br>
+								coworkingspaceC
+								</br>
+								startupA	
+								</br>
+								vcA	
+								</br>
+							</td>
+							<td>
+								opensourcehackerA - prizeA
+								</br>
+								opensourcehackerB - prizeB	
+								</br>
+							</td>
+						</tr>
+						<tr>
+							<td>SundayGMT</td>
+							<td>monday</td>
+							<td>São Paulo, Brazil</td>
+							<td>Online</td>
+							<td>Automotive, Banking, Education, Engineering, Energy </td>
+							<td>uber</td>
+							<td>mohamedtweet</br>blahbalh</br></td>
+						</tr>
+					</table> 
+				</div>
+			</div>
+		</div>
+		</div>
+		</br>
+		<hr>
+		<div id="philosophy" class="">
+			<b><h2>philosophy</h2></b>
+			Urban-innovation aims to fulfill amenities' - ever escalating - demand. However, fully utilizing apropos urban-tech data/services for a specific geolocation and its associative urban cultures is a strenuous endeavor. withdrawing away from the compliexities and focusing on conceptual level of what a city is, what a worldcity is. 
+			<b>
+				Cultivating an openculture is our key to innovation. the ouroboros
+			</b>
+			<b>
+				we are introducing the term "urban sandboxing" as our most quintessential concept for tackling this problem. urban sandboxing is our solution. In its totality
+			</b>
+			World cities shape our humanity. we focus on understanding them to know how to steer our cultures.
+			</br>	
+			</br>
+			whenever there is opendata, innovation is possible, and even probable.
+			innovation requires experimenting.
+			experimenting requires colloberation within an openculture at a certain level of focus.
+			collberation requires aiding tools.
+			citybox is an aiding tool for collberation among experiming startups for urban-innovation on a city level-of-focus.
+			worldcity status is important. 
+			citybox aim to connect startups focusing on a speficic city to turn it into a worldcity. 
+			</br>	
+			<div class="row">
+				<div class="six columns">
+					We scope our attribution of the undertaking difficulties to three primarily keyed problems:
+					* The adhoc methodologies of urban-innovation data/service acquisition regarding a specific geolocation - perceived as a (Geo)Search Problem.
+					* The vast interdisciplinary scope of urban-innovation as a domain of knowledge - perceived as a Data Consolidation Problem.
+					* The time-value characteristics of urban-innovation data/services - perceived as a CAP Therom/Real-time Data Analytics Problem.
+
+					In this paper, we propose the design of a geo-oriented distributed ledger technology aka "blockchain" for urban-innovation, via researching various blockchain designs in other domains. And we set our criteria for evaluating our proposed design, on its technical viability as a solution to our perceived problems.
+					</br>
+					</br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="six columns">
+
+					<b><h4>mission statment</h4></b>
+					</br>
+					we are building citybox.io for the convenience of urban-tech startups to have a no-brainer goto sandbox for exploring and integrating data from various datasources.
+					</br>
+					</br>
+					</br>
+					<h5>"We are urging the development of 
+						<b style="letter-spacing: .4rem;">urban sandboxing</b> as a concept and citybox as a tool ; to guide our communities in conceiving the <b style="letter-spacing: .4rem;">elegantly simple</b> urban innovations." </br></br>&mdash;&nbsp; Mazen Helmy </br>&nbsp;&nbsp;&nbsp;Founder, CityBox.io  </h5>
+					<!--	
+	     <b style="letter-spacing: .4rem;">urban sandboxing</b> as a concept and citybox as an — open for all — tool; to guide our communities in conceiving the <b style="letter-spacing: .4rem;">elegantly simple</b> urban innovations." </br></br>&mdash;&nbsp; Mazen Helmy </br>&nbsp;&nbsp;&nbsp;Founder, CityBox.io  </h5>
+	     <b style="letter-spacing: .4rem;">urban sandboxing</b> as a concept and citybox as it's tool; to foster change in our communities in conceiving the <b style="letter-spacing: .4rem;">elegantly simple</b> urban innovations." </br></br>&mdash;&nbsp; Mazen Helmy </br>&nbsp;&nbsp;&nbsp;Founder, CityBox.io  </h5>
+	     Mazen's quote "We are urging the development of <b>urban sandboxing</b> as a concept, to guide in evading complexity in today's urban-innovation and in conceiving elegantly simple solutions."
+	     Mazen's quote "We are urging the development of <b>urban sandboxing</b> as a concept to guide in conceiving the more elegantly simple solutions and evading away from complexity in today's urban-innovation." 
+	     Mazen's quote "The concept of <b>urban sandboxing</b> aims to guide in conceiving the more elegantly simple solutions by evading away from complexity in today's urban-innovation." 
+	     Mazen's quote "On evading complexity in today's urban innovation puzzles urged the invention of a conceptual tool. The concept of <b>urban sandboxing</b> aims to guide in conceiving the more elegantly simple solutions." 
+	     Mazen's quote "Evading complexity in today's urban innovation puzzles urged the invention of a conceptual tool. The concept of <b>urban sandboxing</b> aims to guide in conceiving the more elegantly simple solutions." 
+	     Mazen's quote "Navigating today's urban innovation puzzles urged the invention of a conceptual tool. The concept of <b>urban sandboxing</b> aims to guide in evading complexity and towards a rapid innovation." 
+	     to guide us navigate towrds elegant solutions."  
+					-->
+
+					<div style="text-align: right !important; padding: 20px;">
+						<a class="btn btn-dark btn-big" style="min-width: 100% !important">
+							<b>
+								media inquiries 
+							</b>
+						</a>
+					</div>
+					</br>
+					</br>
+				</div>
+				<div class="six columns">
+					</br>
+					</br>
+					</br>
+					<!--
+	     <div id="citybox-missionstatment-slider-container">
+	     <div id="citybox-missionstatment" class="citybox-missionstatment-photo">
+					-->
+					<div>
+						<img class="citybox-missionstatment-photo" src="img/people/mazen.png" />
+					</div>
+	     </div>
+	     </div>
+	     <div class="row">
+		     <div class="six columns">
+			     <b><h4>talent</h4></b> 
+			     </br>
+			     complexity is innovation's worst nemsis and best friend. to navigate from concept to actualization, we need to embrace the notion of simplicity as a guideline in our endevours. we recognize that true talent is not just skills but rather a uniqe combination of skill, experiance, and true appreciation of simplicity in solving complex problems.
+			     chaos theory notes, etc. 
+			     we teamup with a variety of talents
+			     </br>
+			     </br>
+			     </br>
+			     <div style="text-align: right !important; padding: 20px;">
+				     <a class="btn btn-dark btn-big" style="min-width: 100% !important">
+					     <b>
+						     become a cityboxer
+					     </b>
+				     </a>
+			     </div>
+			     </br>
+			     </br>
+		     </div>
+		     <div class="six columns">
+			     </br>
+			     </br>
+			     </br>
+			     some talent team photos	
+		     </div>
+	     </div>
+	     <div class="row">
+		     <div class="six columns">
+			     <b><h4>openculture</h4></b> 
+			     </br>
+			     Culture is everything! 
+			     </br>
+			     We are engaging the urban-innovation openculture through a varity of methods including
+			     our internetradio radio.citybox.io, public chatting servers irc.citybox.io. rss and email subscriptions. github wiki. setup a mailinglist server. put icons for social media in the side slideshow area.
+			     <h5>
+				     <i class="fab fa-youtube"></i>
+				     <i class="fab fa-facebook-square"></i>
+				     <i class="fab fa-instagram"></i>
+				     <i class="fab fa-twitter"></i>
+				     <i class="fab fa-slack-hash"></i>
+				     <i class="fab fa-stack-overflow"></i>	
+			     </h5>
+			     <b>subscribe</b>
+			     </br>
+			     <input class="subscribe"/>	
+			     </br>
+			     </br>
+			     </br>
+			     <div style="text-align: right !important; padding: 20px;">
+				     <a class="btn btn-dark btn-big" style="min-width: 100% !important">
+					     <b>
+						     engage the community 
+						     <!-- a modal with slickslider>> slide1:irc.citybox.io; slide2: search logs; slide3 selected logsearch result view --> 
+						     <!-- turning IRC chatrooms into Fourm topics on the UI --> 
+						     <!-- an html buttom to create a "thread/room" and others "answer/chat" in it --> 
+						     <!-- clever masking of IRC original interface into a forum with live chats--> 
+						     
+						     <!-- webinterface for chrooted irc.citybox.io --> 
+						     <!-- maybe https://github.com/confact/dunirc.git  --> 
+						     <!-- maybe https://www.unrealircd.org/docs/WebSocket_support  --> 
+						     <!-- maybe an IRC server in base with chroot? i guess not but ask anyway  --> 
+					     </b>
+				     </a>
+			     </div>
+		     </div>
+		     <div class="six columns">
+			     </br>
+			     </br>
+			     </br>
+			     some openculture happy photos, yay!
+			     </br>
+			     gif to show how to engage the community and chat
+		     </div>
+	     </div>
+				</div>
+			</div>
+			</br>
+			</br>
+			</br>
+		</div>
+		<hr>
+		</br>
+		</br>
+		<div id="footer" class="footer-container">
+			<!-- columns should be the immediate child of a .row -->
+			<div class="row copyright">
+				<b>&copy; citybox.io</b>
+				&nbsp; &nbsp;
+				&nbsp; &nbsp;
+				<b>HQ</b>
+				73 Road 15 Maadi,
+				Cairo, Egypt
+				&nbsp; &nbsp;
+				&nbsp; &nbsp;
+				<b>hello</b>@citybox.io <b>PGP</b>(notification for the user to click to autocopy PGP)
+			</div>
+		</div>
+		</br>
+		</br>
+		</br>
+		<style>
+
+/*** start of preloader ***/
+body {
+	/* 
+	 */
+	overflow: hidden; 
+}
+/* Preloader */
+#preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #fff;
+	/* change if the mask should have another color then white */
+	z-index: 99;
+	/* makes sure it stays on top */
+}
+#status {
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	left: 42%;
+	/* centers the loading animation horizontally one the screen */
+	top: 20%;
+	/* centers the loading animation vertically one the screen */
+	background-image: url('img/preloading.gif');
+	/* path to your loading animation */
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: -100px 0 0 -100px;
+	/* is width and height divided by two */
+}
+/*** end of preloader ***/
+		</style>
+
+		<div id="preloader">
+			<div id="status"></div>
+			<div id="status">&nbsp;</div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script> -->
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+	<script type="text/javascript" src="js/jquery.easy-autocomplete.min.js"></script>
+	
+	<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>-->
+	<script type="text/javascript" src="js/typed.js@2.0.9"></script>
+	
+	<script type="text/javascript" src="js/jquery.tinytoggle.min.js"></script>
+	<script type="text/javascript" src="js/leaflet.js"></script>
+	<script type="text/javascript" src="js/leaflet.draw.js"></script>
+	<script type="text/javascript" src="js/Control.MiniMap.min.js"></script>
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	<!--	<script type="text/javascript" src="js/vex.min.js"></script> -->
+	<script type="text/javascript" src="js/vex.combined.min.js"></script>
+	
+
+	<script type="text/javascript" src="js/d3.v4.min.js"></script>
+	<script type="text/javascript" src="js/d3kit.min.js"></script>
+	<script type="text/javascript" src="js/labella.min.js"></script>
+	<script type="text/javascript" src="js/d3kit-timeline.min.js"></script>
+	<script type="text/javascript" src="js/ion.rangeSlider.js"></script>
+
+
+	<!-- 
+	 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.5.0/lodash.min.js"></script>
+	 -->
+	 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	 <script type="text/javascript" src="js/lodash.min.js"></script>
+	 <script type="text/javascript" src="js/gridstack.js"></script>
+	 <script type="text/javascript" src="js/gridstack.jQueryUI.js"></script>
+	 <!-- 
+	  <script src="js/jquery.gridster.min.js"></script>
+	  -->
+
+	  <script type="text/javascript" src="js/notify.min.js"></script>
+	  <script type="text/javascript" src="js/notify-metro.js"></script>
+
+	  <script type="text/javascript" src="js/jquery.nicescroll.iframehelper.min.js"></script>
+	  <script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+
+	 <script src="js/main.js"></script>
+	<script>
+
+	</script>
+</html>

@@ -223,6 +223,7 @@ cqrs_dispatcher(void)
 	strlcat(bcc, "-", sizeof(bcc));
 	strlcat(bcc, DAEMON_TYPE, sizeof(bcc));
 	strlcat(bcc, ".sh", sizeof(bcc)); /*TODO remove the extension */
+	//strlcat(bcc, '{"foo": "bar", "ans": 42}', sizeof(bcc));
 	strlcat(bcc, " argument1 argument2", sizeof(bcc));
 	//strlcat(bcc, buffer, sizeof(bcc));
 	//printf("buffer %s", buffer);

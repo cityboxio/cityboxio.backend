@@ -166,4 +166,3 @@ show_env(void)
 	//openlog(basename(getenv("SCRIPT_NAME")), LOG_PID, LOG_LOCAL3);
 	syslog(LOG_DEBUG, "http enviroment shown");
 }
-

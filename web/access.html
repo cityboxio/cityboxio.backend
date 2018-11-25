@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8" />
+		<title>citybox.io</title>
+		<link href="css/main.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<h1> Authentication and Authorization using JWT and jscookie</h1>
+		</br>
+		some username and password; login button; signup botton; signout button
+		<!-- https://github.com/js-cookie/js-cookie docs -->
+
+		</br>
+
+		<!-- OUR FORM -->
+		<form id="signup-form" action="http://192.168.1.202:10000" method="POST">
+			<!-- NAME -->
+			<label for="username">username</label>
+			<input type="text" class="form-control" name="username" placeholder="deadpool3">
+			<!-- errors will go here -->
+
+			<!-- EMAIL -->
+			<label for="email">Email</label>
+			<input type="text" class="form-control" name="email" placeholder="ryan@deadpool3.movie">
+			<!-- errors will go here -->
+			
+			<button type="submit" class="btn btn-success">Submit <span class="fa fa-arrow-right"></span></button>
+		</form>
+
+	</body>
+
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script> -->
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>	
+	<script>
+		// expires in 7days
+		Cookies.set('jwttoken', 'jwttoken_value', { expires: 7 }); 
+
+console.log(Cookies.get('jwttoken'));
+console.log("hello");
+
+// Get the form.
+var signupform = $('#signup-form');
+// Set up an event listener for the contact form.
+$(signupform).submit(function(event) {
+	// Stop the browser from submitting the form.
+	event.preventDefault();
+
+	// Serialize the form data.
+	var formData = $(signupform).serialize();
+	// Submit the form using AJAX.
+	$.ajax({
+		type: 'POST',
+		data: formData,
+		dataType: 'json',
+		url: $(signupform).attr('action'),
+		success : function(result) {
+			// you can see the result from the console
+			// tab of the developer tools
+			console.log("form got seralized:	" + formData);
+			console.log(result);
+		},
+		error: function(xhr, resp, text) {
+			console.log(xhr, resp, text);
+		}
+	})
+});
+
+	</script>
+	<!-- 	<script src="js/main.js"></script> 	-->
+	<script>
+
+	</script>
+</html>

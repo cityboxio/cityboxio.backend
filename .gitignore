@@ -1,3 +1,5 @@
+secrets/keys
+
 *.swp
 *.core
 bin/

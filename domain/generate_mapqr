@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#
+#	Generates a QR code from a citybox map data
+#	useful to share a map's status with others.
+#
+
+file=district_inventory.xlsx
+while IFS= read -r line
+do
+	echo "\n----------------------------------\n"
+	echo $line
+	id=$(echo $line | awk -F ',' '{ print $1 }')
+	echo "Generating QRCode for $id"
+	qrencode -l L -v 1 -o "$id.png" "$line"
+done <"$file"
