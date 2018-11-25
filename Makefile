@@ -143,6 +143,7 @@ webserver:
 	# 	configure a citybox frontend 
 	doas sh $(/bin/rm -rf /var/www/citybox.io)
 	doas sh $(/bin/cp -r ./web /var/www/citybox.io)
+	doas rcctl restart httpd
 	# 	configure a private ports website
 
 #
