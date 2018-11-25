@@ -1,4 +1,3 @@
-# cityboxio.backend
 
 
   ####      #     #####   #   #  #####    ####   #    #             #     ####
@@ -12,7 +11,9 @@
 .
 |-- BUGS.md
 |-- DATA
-|   `-- README.md
+|   |-- README.md
+|   |-- awk-geolite
+|   `-- ipcity.sh
 |-- DATA.samples
 |   |-- API_EGY_DS2_en_csv_v2_10086258.csv
 |   |-- API_EGY_DS2_en_csv_v2_10086258.html
@@ -26,29 +27,53 @@
 |-- README
 |-- TODO.md
 |-- bin
-|   |-- apidoc
-|   |-- endpointd
+|   |-- authentication
+|   |-- authentication-commands-daemon
+|   |-- authentication-queries-daemon
+|   |-- authorization
+|   |-- authorization-commands-daemon
+|   |-- authorization-queries-daemon
 |   |-- opendatahub
-|   |-- ping
-|   `-- rd
+|   |-- opendatahub-commands-daemon
+|   `-- opendatahub-queries-daemon
 |-- cli
 |   `-- cbcli.3
 |-- config
+|   |-- cloudflare.sh
 |   |-- daemon.sh
+|   |-- doas.conf
 |   |-- endpoint.sh
 |   |-- endpointd.sh
 |   |-- httpd.conf
 |   |-- rc.conf.local
-|   `-- setup.sh
+|   |-- setup.sh
+|   |-- smtpd.conf
+|   `-- syslog.conf
 |-- cronjobs
 |   |-- README
+|   |-- aqarmap
 |   |-- city.sh
 |   |-- csvtohtml.awk
 |   |-- jsondb
-|   |-- somejson
+|   |-- somejson.geojson.json
 |   `-- worldbank.sh
-|-- doc
-|   `-- unixdomain.jpeg
+|-- db
+|   |-- README
+|   `-- citybox-redis
+|-- domain
+|   |-- README
+|   |-- abc.query.sh
+|   |-- authenticate.sh
+|   |-- generate_mapqr
+|   |-- jsondb.sh
+|   |-- opendatahub-create_event-command.1
+|   |-- opendatahub-create_event-command.sh
+|   |-- opendatahub-create_event-queries.sh
+|   `-- xyz.command.sh
+|-- mobile
+|   `-- README
+|-- secrets
+|   `-- README
 |-- src
 |   |-- README
 |   |-- chain.c
@@ -58,9 +83,442 @@
 |   |-- endpoint.c
 |   |-- endpointd.8
 |   `-- endpointd.c
-`-- test
-    |-- test.sh
-    |-- userA.sh
-    `-- userB.sh
+|-- test
+|   |-- queries.big.json
+|   |-- queries.json
+|   `-- usecaseA.sh
+|-- web
+|   |-- 3d.html
+|   |-- BUGS.md
+|   |-- DATA
+|   |   |-- cities.geojson
+|   |   |-- cities.json
+|   |   |-- countries.json
+|   |   |-- samples
+|   |   |   |-- cities.small.geojson
+|   |   |   `-- cities.small.json
+|   |   `-- world-cities_json.json
+|   |-- LICENSE
+|   |-- README.md
+|   |-- TODO.md
+|   |-- access.html
+|   |-- api.html
+|   |-- beta.html
+|   |-- css
+|   |   |-- Control.MiniMap.min.css
+|   |   |-- all.css
+|   |   |-- animate.css
+|   |   |-- comfortaa.css
+|   |   |-- easy-autocomplete.css
+|   |   |-- easy-autocomplete.min.css
+|   |   |-- easy-autocomplete.themes.css
+|   |   |-- easy-autocomplete.themes.min.css
+|   |   |-- fontawesome.all.min.css
+|   |   |-- fontawesome.css
+|   |   |-- gridstack.css
+|   |   |-- ion.rangeSlider.css
+|   |   |-- ion.rangeSlider.skinFlat.css
+|   |   |-- ion.rangeSlider.skinHTML5.css
+|   |   |-- ion.rangeSlider.skinModern.css
+|   |   |-- ion.rangeSlider.skinNice.css
+|   |   |-- ion.rangeSlider.skinSimple.css
+|   |   |-- leaflet.css
+|   |   |-- leaflet.draw.css
+|   |   |-- main.css
+|   |   |-- maps
+|   |   |   |-- easy-autocomplete.css.map
+|   |   |   |-- easy-autocomplete.min.css.map
+|   |   |   |-- easy-autocomplete.themes.css.map
+|   |   |   `-- easy-autocomplete.themes.min.css.map
+|   |   |-- normalize.css
+|   |   |-- notify-metro.css
+|   |   |-- skeleton.css
+|   |   |-- slick-theme.css
+|   |   |-- slick.css
+|   |   |-- tinytoggle.min.css
+|   |   |-- vex-theme-wireframe.css
+|   |   |-- vex.css
+|   |   `-- webfonts
+|   |       |-- fa-brands-400.eot
+|   |       |-- fa-brands-400.svg
+|   |       |-- fa-brands-400.ttf
+|   |       |-- fa-brands-400.woff
+|   |       |-- fa-brands-400.woff2
+|   |       |-- fa-regular-400.eot
+|   |       |-- fa-regular-400.svg
+|   |       |-- fa-regular-400.ttf
+|   |       |-- fa-regular-400.woff
+|   |       |-- fa-regular-400.woff2
+|   |       |-- fa-solid-900.eot
+|   |       |-- fa-solid-900.svg
+|   |       |-- fa-solid-900.ttf
+|   |       |-- fa-solid-900.woff
+|   |       `-- fa-solid-900.woff2
+|   |-- default.html
+|   |-- featuritis.md
+|   |-- font
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4Q4FqPfE.woff2
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4QIFqPfE.woff2
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4QoFqPfE.woff2
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4SYFqPfE.woff2
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4TYFq.woff2
+|   |   |-- 1Ptsg8LJRfWJmhDAuUs4TYFv.ttf
+|   |   `-- 1Ptsg8LJRfWJmhDAuUs4ToFqPfE.woff2
+|   |-- grid.htm
+|   |-- img
+|   |   |-- citybox.gif
+|   |   |-- citybox.png
+|   |   |-- datasources
+|   |   |   `-- worldbank.png
+|   |   |-- favicon
+|   |   |   |-- android-icon-144x144.png
+|   |   |   |-- android-icon-192x192.png
+|   |   |   |-- android-icon-36x36.png
+|   |   |   |-- android-icon-48x48.png
+|   |   |   |-- android-icon-72x72.png
+|   |   |   |-- android-icon-96x96.png
+|   |   |   |-- apple-icon-114x114.png
+|   |   |   |-- apple-icon-120x120.png
+|   |   |   |-- apple-icon-144x144.png
+|   |   |   |-- apple-icon-152x152.png
+|   |   |   |-- apple-icon-180x180.png
+|   |   |   |-- apple-icon-57x57.png
+|   |   |   |-- apple-icon-60x60.png
+|   |   |   |-- apple-icon-72x72.png
+|   |   |   |-- apple-icon-76x76.png
+|   |   |   |-- apple-icon-precomposed.png
+|   |   |   |-- apple-icon.png
+|   |   |   |-- browserconfig.xml
+|   |   |   |-- favicon-16x16.png
+|   |   |   |-- favicon-32x32.png
+|   |   |   |-- favicon-96x96.png
+|   |   |   |-- favicon.ico
+|   |   |   |-- manifest.json
+|   |   |   |-- ms-icon-144x144.png
+|   |   |   |-- ms-icon-150x150.png
+|   |   |   |-- ms-icon-310x310.png
+|   |   |   `-- ms-icon-70x70.png
+|   |   |-- flags
+|   |   |   |-- ad.svg
+|   |   |   |-- ae.svg
+|   |   |   |-- af.svg
+|   |   |   |-- ag.svg
+|   |   |   |-- ai.svg
+|   |   |   |-- al.svg
+|   |   |   |-- am.svg
+|   |   |   |-- an.svg
+|   |   |   |-- ao.svg
+|   |   |   |-- aq.svg
+|   |   |   |-- ar.svg
+|   |   |   |-- as.svg
+|   |   |   |-- at.svg
+|   |   |   |-- au.svg
+|   |   |   |-- aw.svg
+|   |   |   |-- ax.svg
+|   |   |   |-- az.svg
+|   |   |   |-- ba.svg
+|   |   |   |-- bb.svg
+|   |   |   |-- bd.svg
+|   |   |   |-- be.svg
+|   |   |   |-- bf.svg
+|   |   |   |-- bg.svg
+|   |   |   |-- bh.svg
+|   |   |   |-- bi.svg
+|   |   |   |-- bj.svg
+|   |   |   |-- bl.svg
+|   |   |   |-- bm.svg
+|   |   |   |-- bn.svg
+|   |   |   |-- bo.svg
+|   |   |   |-- bq.svg
+|   |   |   |-- br.svg
+|   |   |   |-- bs.svg
+|   |   |   |-- bt.svg
+|   |   |   |-- bv.svg
+|   |   |   |-- bw.svg
+|   |   |   |-- by.svg
+|   |   |   |-- bz.svg
+|   |   |   |-- ca.svg
+|   |   |   |-- cc.svg
+|   |   |   |-- cd.svg
+|   |   |   |-- cf.svg
+|   |   |   |-- cg.svg
+|   |   |   |-- ch.svg
+|   |   |   |-- ci.svg
+|   |   |   |-- ck.svg
+|   |   |   |-- cl.svg
+|   |   |   |-- cm.svg
+|   |   |   |-- cn.svg
+|   |   |   |-- co.svg
+|   |   |   |-- cr.svg
+|   |   |   |-- cu.svg
+|   |   |   |-- cv.svg
+|   |   |   |-- cw.svg
+|   |   |   |-- cx.svg
+|   |   |   |-- cy.svg
+|   |   |   |-- cz.svg
+|   |   |   |-- de.svg
+|   |   |   |-- dj.svg
+|   |   |   |-- dk.svg
+|   |   |   |-- dm.svg
+|   |   |   |-- do.svg
+|   |   |   |-- dz.svg
+|   |   |   |-- ec.svg
+|   |   |   |-- ee.svg
+|   |   |   |-- eg.svg
+|   |   |   |-- eh.svg
+|   |   |   |-- er.svg
+|   |   |   |-- error.svg
+|   |   |   |-- es.svg
+|   |   |   |-- et.svg
+|   |   |   |-- eu.svg
+|   |   |   |-- fi.svg
+|   |   |   |-- fj.svg
+|   |   |   |-- fk.svg
+|   |   |   |-- fm.svg
+|   |   |   |-- fo.svg
+|   |   |   |-- fr.svg
+|   |   |   |-- ga.svg
+|   |   |   |-- gb-eng.svg
+|   |   |   |-- gb-nir.svg
+|   |   |   |-- gb-sct.svg
+|   |   |   |-- gb-wls.svg
+|   |   |   |-- gb.svg
+|   |   |   |-- gd.svg
+|   |   |   |-- ge.svg
+|   |   |   |-- gf.svg
+|   |   |   |-- gg.svg
+|   |   |   |-- gh.svg
+|   |   |   |-- gi.svg
+|   |   |   |-- gl.svg
+|   |   |   |-- gm.svg
+|   |   |   |-- gn.svg
+|   |   |   |-- gp.svg
+|   |   |   |-- gq.svg
+|   |   |   |-- gr.svg
+|   |   |   |-- gs.svg
+|   |   |   |-- gt.svg
+|   |   |   |-- gu.svg
+|   |   |   |-- gw.svg
+|   |   |   |-- gy.svg
+|   |   |   |-- hk.svg
+|   |   |   |-- hm.svg
+|   |   |   |-- hn.svg
+|   |   |   |-- hr.svg
+|   |   |   |-- ht.svg
+|   |   |   |-- hu.svg
+|   |   |   |-- id.svg
+|   |   |   |-- ie.svg
+|   |   |   |-- il.svg
+|   |   |   |-- im.svg
+|   |   |   |-- in.svg
+|   |   |   |-- io.svg
+|   |   |   |-- iq.svg
+|   |   |   |-- ir.svg
+|   |   |   |-- is.svg
+|   |   |   |-- it.svg
+|   |   |   |-- je.svg
+|   |   |   |-- jm.svg
+|   |   |   |-- jo.svg
+|   |   |   |-- jp.svg
+|   |   |   |-- ke.svg
+|   |   |   |-- kg.svg
+|   |   |   |-- kh.svg
+|   |   |   |-- ki.svg
+|   |   |   |-- km.svg
+|   |   |   |-- kn.svg
+|   |   |   |-- kp.svg
+|   |   |   |-- kr.svg
+|   |   |   |-- kw.svg
+|   |   |   |-- ky.svg
+|   |   |   |-- kz.svg
+|   |   |   |-- la.svg
+|   |   |   |-- lb.svg
+|   |   |   |-- lc.svg
+|   |   |   |-- li.svg
+|   |   |   |-- lk.svg
+|   |   |   |-- lr.svg
+|   |   |   |-- ls.svg
+|   |   |   |-- lt.svg
+|   |   |   |-- lu.svg
+|   |   |   |-- lv.svg
+|   |   |   |-- ly.svg
+|   |   |   |-- ma.svg
+|   |   |   |-- mc.svg
+|   |   |   |-- md.svg
+|   |   |   |-- me.svg
+|   |   |   |-- mf.svg
+|   |   |   |-- mg.svg
+|   |   |   |-- mh.svg
+|   |   |   |-- mk.svg
+|   |   |   |-- ml.svg
+|   |   |   |-- mm.svg
+|   |   |   |-- mn.svg
+|   |   |   |-- mo.svg
+|   |   |   |-- mp.svg
+|   |   |   |-- mq.svg
+|   |   |   |-- mr.svg
+|   |   |   |-- ms.svg
+|   |   |   |-- mt.svg
+|   |   |   |-- mu.svg
+|   |   |   |-- mv.svg
+|   |   |   |-- mw.svg
+|   |   |   |-- mx.svg
+|   |   |   |-- my.svg
+|   |   |   |-- mz.svg
+|   |   |   |-- na.svg
+|   |   |   |-- nc.svg
+|   |   |   |-- ne.svg
+|   |   |   |-- nf.svg
+|   |   |   |-- ng.svg
+|   |   |   |-- ni.svg
+|   |   |   |-- nl.svg
+|   |   |   |-- no.svg
+|   |   |   |-- np.svg
+|   |   |   |-- nr.svg
+|   |   |   |-- nu.svg
+|   |   |   |-- nz.svg
+|   |   |   |-- om.svg
+|   |   |   |-- pa.svg
+|   |   |   |-- pe.svg
+|   |   |   |-- pf.svg
+|   |   |   |-- pg.svg
+|   |   |   |-- ph.svg
+|   |   |   |-- pk.svg
+|   |   |   |-- pl.svg
+|   |   |   |-- pm.svg
+|   |   |   |-- pn.svg
+|   |   |   |-- pr.svg
+|   |   |   |-- ps.svg
+|   |   |   |-- pt.svg
+|   |   |   |-- pw.svg
+|   |   |   |-- py.svg
+|   |   |   |-- qa.svg
+|   |   |   |-- re.svg
+|   |   |   |-- ro.svg
+|   |   |   |-- rs.svg
+|   |   |   |-- ru.svg
+|   |   |   |-- rw.svg
+|   |   |   |-- sa.svg
+|   |   |   |-- sb.svg
+|   |   |   |-- sc.svg
+|   |   |   |-- sd.svg
+|   |   |   |-- se.svg
+|   |   |   |-- sg.svg
+|   |   |   |-- sh.svg
+|   |   |   |-- si.svg
+|   |   |   |-- sj.svg
+|   |   |   |-- sk.svg
+|   |   |   |-- sl.svg
+|   |   |   |-- sm.svg
+|   |   |   |-- sn.svg
+|   |   |   |-- so.svg
+|   |   |   |-- sr.svg
+|   |   |   |-- ss.svg
+|   |   |   |-- st.svg
+|   |   |   |-- sv.svg
+|   |   |   |-- sx.svg
+|   |   |   |-- sy.svg
+|   |   |   |-- sz.svg
+|   |   |   |-- tc.svg
+|   |   |   |-- td.svg
+|   |   |   |-- tf.svg
+|   |   |   |-- tg.svg
+|   |   |   |-- th.svg
+|   |   |   |-- tj.svg
+|   |   |   |-- tk.svg
+|   |   |   |-- tl.svg
+|   |   |   |-- tm.svg
+|   |   |   |-- tn.svg
+|   |   |   |-- to.svg
+|   |   |   |-- tr.svg
+|   |   |   |-- tt.svg
+|   |   |   |-- tv.svg
+|   |   |   |-- tw.svg
+|   |   |   |-- tz.svg
+|   |   |   |-- ua.svg
+|   |   |   |-- ug.svg
+|   |   |   |-- um.svg
+|   |   |   |-- us.svg
+|   |   |   |-- uy.svg
+|   |   |   |-- uz.svg
+|   |   |   |-- va.svg
+|   |   |   |-- vc.svg
+|   |   |   |-- ve.svg
+|   |   |   |-- vg.svg
+|   |   |   |-- vi.svg
+|   |   |   |-- vn.svg
+|   |   |   |-- vu.svg
+|   |   |   |-- wf.svg
+|   |   |   |-- ws.svg
+|   |   |   |-- xk.svg
+|   |   |   |-- ye.svg
+|   |   |   |-- yt.svg
+|   |   |   |-- za.svg
+|   |   |   |-- zm.svg
+|   |   |   `-- zw.svg
+|   |   |-- hackathons
+|   |   |   |-- hack1.jpg
+|   |   |   |-- hack1.small.jpg
+|   |   |   |-- hack2.jpg
+|   |   |   |-- hack2.small.jpg
+|   |   |   |-- hack3.jpg
+|   |   |   `-- hack3.small.jpg
+|   |   |-- icon.gif
+|   |   |-- icon.png
+|   |   |-- icon_search.png
+|   |   |-- layers-2x.png
+|   |   |-- layers.png
+|   |   |-- marker-icon-2x.png
+|   |   |-- marker-icon.png
+|   |   |-- marker-shadow.png
+|   |   |-- opendatacharter.png
+|   |   |-- opensource.png
+|   |   |-- people
+|   |   |   |-- mazen.png
+|   |   |   `-- mazen.png.original
+|   |   |-- preloading.gif
+|   |   |-- sprite-skin-flat.png
+|   |   `-- toggle.svg
+|   |-- index.html
+|   |-- js
+|   |   |-- Control.MiniMap.min.js
+|   |   |-- bootstrap.min.js
+|   |   |-- d3.v4.min.js
+|   |   |-- d3kit-timeline.min.js
+|   |   |-- d3kit.min.js
+|   |   |-- fontawesome.all.min.js
+|   |   |-- gridstack.jQueryUI.js
+|   |   |-- gridstack.js
+|   |   |-- ion.rangeSlider.js
+|   |   |-- jquery-3.3.1.min.js
+|   |   |-- jquery-ui.js
+|   |   |-- jquery.easy-autocomplete.js
+|   |   |-- jquery.easy-autocomplete.min.js
+|   |   |-- jquery.nicescroll.iframehelper.min.js
+|   |   |-- jquery.nicescroll.min.js
+|   |   |-- jquery.tinytoggle.min.js
+|   |   |-- labella.min.js
+|   |   |-- leaflet-src.esm.js
+|   |   |-- leaflet-src.esm.js.map
+|   |   |-- leaflet-src.js
+|   |   |-- leaflet-src.js.map
+|   |   |-- leaflet.draw.js
+|   |   |-- leaflet.js
+|   |   |-- leaflet.js.map
+|   |   |-- lodash.min.js
+|   |   |-- main.js
+|   |   |-- notify-metro.js
+|   |   |-- notify.min.js
+|   |   |-- progressbar.js
+|   |   |-- slick.min.js
+|   |   |-- typed.js@2.0.9
+|   |   |-- vex.combined.min.js
+|   |   `-- vex.min.js
+|   |-- nav_concept.html
+|   |-- payments.htm
+|   `-- progress.html
+`-- whitepaper
+    |-- final.tex
+    `-- unixdomain.jpeg
 
-9 directories, 43 files
+27 directories, 484 files

@@ -14,8 +14,7 @@ man:
 	echo "make manpages and install them"
 
 readme:
-	echo "# cityboxio.backend" > README
-	echo "" >> README
+	echo "" > README
 	banner citybox.io >> README
 	echo "" >> README
 	tree >> README
